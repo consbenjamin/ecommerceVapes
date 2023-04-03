@@ -1,0 +1,75 @@
+[
+  {
+  "id": 1,
+  "img":"https://cdn.shopify.com/s/files/1/0523/9259/1543/products/IGNITE-V40-4000-puffs---GRAPE-ICE-Disposable-Vape-IGNITE-1659975484_700x.webp?v=1659975485",
+  "name":"Ignite V40 4000Puffs 5%. Pod Desechable",
+  "description":"Lorem ipsum dolor sit amet consectetur adipisicing elit In odit exercitationem",
+  "price": 5000,
+  "flavor":{
+    "flavor0":"grape",
+    "flavor1":"watermelon",
+    "flavor2":"apple"
+  }
+  },
+  {
+    "id": 2,
+    "img":"https://cdn.shopify.com/s/files/1/0523/9259/1543/products/IGNITE-V40-4000-puffs---GRAPE-ICE-Disposable-Vape-IGNITE-1659975484_700x.webp?v=1659975485",
+    "name":"Ignite V40 4000Puffs 5%. Pod Desechable",
+    "description":"Lorem ipsum dolor sit amet consectetur adipisicing elit In odit exercitationem",
+    "price": 4300,
+    "flavor":{
+      "flavor0":"grape",
+      "flavor1":"green apple",
+      "flavor2":"apple"
+    }
+  },
+  {
+    "id": 3,
+    "img":"https://cdn.shopify.com/s/files/1/0523/9259/1543/products/IGNITE-V40-4000-puffs---GRAPE-ICE-Disposable-Vape-IGNITE-1659975484_700x.webp?v=1659975485",
+    "name":"Ignite V40 4000Puffs 5%. Pod Desechable",
+    "description":"Lorem ipsum dolor sit amet consectetur adipisicing elit In odit exercitationem",
+    "price": 4300,
+    "flavor":{
+      "flavor0":"grape",
+      "flavor1":"orange",
+      "flavor2":"apple"
+    }
+  },
+  {
+    "id": 4,
+    "img":"https://cdn.shopify.com/s/files/1/0523/9259/1543/products/IGNITE-V40-4000-puffs---GRAPE-ICE-Disposable-Vape-IGNITE-1659975484_700x.webp?v=1659975485",
+    "name":"Ignite V40 4000Puffs 5%. Pod Desechable",
+    "description":"Lorem ipsum dolor sit amet consectetur adipisicing elit In odit exercitationem",
+    "price": 4300,
+    "flavor":{
+      "flavor0":"grape",
+      "flavor1":"strawberry",
+      "flavor2":"apple"
+    }
+  },
+  {
+    "id": 5,
+    "img":"https://cdn.shopify.com/s/files/1/0523/9259/1543/products/IGNITE-V40-4000-puffs---GRAPE-ICE-Disposable-Vape-IGNITE-1659975484_700x.webp?v=1659975485",
+    "name":"Ignite V40 4000Puffs 5%. Pod Desechable",
+    "description":"Lorem ipsum dolor sit amet consectetur adipisicing elit In odit exercitationem",
+    "price": 4300,
+    "flavor":{
+      "flavor0":"watermelon",
+      "flavor1":"grape",
+      "flavor2":"apple"
+    }
+  },
+  {
+    "id": 6,
+    "img":"https://cdn.shopify.com/s/files/1/0523/9259/1543/products/IGNITE-V40-4000-puffs---GRAPE-ICE-Disposable-Vape-IGNITE-1659975484_700x.webp?v=1659975485",
+    "name":"Ignite V40 4000Puffs 5%. Pod Desechable",
+    "description":"Lorem ipsum dolor sit amet consectetur adipisicing elit In odit exercitationem",
+    "price": 4300,
+    "flavor":{
+      "flavor0":"grape",
+      "flavor1":"watermelon",
+      "flavor2":"apple"
+    }
+  }
+
+]
