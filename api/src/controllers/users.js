@@ -47,7 +47,39 @@ const postLogin = async (req, res) => {
 
 ///////////////////////////////////////////////////////////////
 
+const findUserById = async (req, res) => {
+  const { id } = req.params;
+
+  if (!id || isNaN(id)) {
+    return res.status(400).json({ message: 'ID de usuario no válido' });
+  }
+  try {
+    const userId = await User.findByPk(id, {attributes: { exclude: ['password'] } });
+    if (!userId) {
+      return res.status(404).json({ message: 'Usuario no encontrado' });
+    }
+    res.status(200).json(userId);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error buscando usuario por ID' });
+  }
+};
+
+///////////////////////////////////////////////////////////////
+
+const getUsers = async (req, res) => {
+  try {
+    const users = await User.findAll({ attributes: { exclude: ['password'] } });
+    res.status(200).json(users);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: 'Error buscando usuarios' });
+  }
+};
+
+
+///////////////////////////////////////////////////////////////
 
 
 
-module.exports = { postRegister, postLogin };
+module.exports = { postRegister, postLogin, findUserById, getUsers };

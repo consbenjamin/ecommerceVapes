@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { AiFillTag, AiOutlineClose, AiOutlineMenu, AiFillHome } from 'react-icons/ai';
 import { BsFillCartFill, BsFillSaveFill, BsFillPersonFill } from 'react-icons/bs';
-import { TbTruckDelivery } from 'react-icons/tb';
 import { FaWallet } from 'react-icons/fa';
 import { HiSearch } from "react-icons/hi";
 import { MdFavorite, MdHelp } from 'react-icons/md';

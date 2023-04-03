@@ -2,7 +2,9 @@ import { GET_PRODUCTS, POST_PRODUCTS, EDIT_PRODUCT, GET_PRODUCT_BY_ID } from "./
 
 
 const initialState = {
-  allProducts: []
+  allProducts: [],
+  user: [],
+  token: [],
 };
 
 
