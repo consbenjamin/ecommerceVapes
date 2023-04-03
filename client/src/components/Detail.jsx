@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getProductsById } from '../redux/actions';
-import axios from 'axios';
 
 
 export default function Detail() {
@@ -20,7 +19,7 @@ export default function Detail() {
     <section class="py-20"> 
     <div class="container mx-auto px-4">
       <nav class="flex">
-        <ol role="list" class="flex items-center">
+        <ol class="flex items-center">
           <li class="text-left">
             <div class="-m-1">
             <Link to={'/'} className="rounded-md p-1 text-sm font-medium text-gray-600 focus:text-gray-900 focus:shadow hover:text-gray-800">Home</Link> 
