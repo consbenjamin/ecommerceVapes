@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { loginUser } from '../../redux/actions';
 import Swal from 'sweetalert2';
 
+
 export default function Login() {
 
   const expCorreo = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$/;
@@ -30,8 +31,26 @@ export default function Login() {
 
       localStorage.setItem('token', token);
 
+      if (response.type === 'LOGIN_SUCCESS') { 
+        return Swal.fire({
+          icon: 'success',
+          title: '¡Inicio de sesión exitoso!',
+          text: 'Has iniciado sesión correctamente',
+          timer: 3000,
+          showConfirmButton: false
+        }).then(() => {
+          window.location.href = '/';
+        }); 
+      } else {
+        setError({ message: "Error de inicio de sesión. Por favor, inténtelo de nuevo." });
+        Swal.fire({
+          icon: 'error',
+          title: 'Error de inicio de sesión',
+          text: 'Por favor, inténtelo de nuevo.'
+        });
+      }
     } catch (error) {
-      setError({ message: "Error de inicio de sesión. Por favor, inténtelo de nuevo." })
+      setError({ message: "Error de inicio de sesión. Por favor, inténtelo de nuevo." });
     }
   };
 
@@ -71,7 +90,7 @@ export default function Login() {
         <div className="absolute bottom-0 z-10 px-8 text-white opacity-100">
           <p className="mb-7 text-sm opacity-70">Vape Club</p>
         </div>
-        <img className="-z-1 absolute top-0 h-full w-full object-cover opacity-90" src={registerImg}/>
+        <img className="-z-1 absolute top-0 h-full w-full object-cover opacity-90" src={registerImg} alt='registerImg'/>
       </div>
       <div className="flex w-full flex-col md:w-1/2">
         <div className="my-auto mx-auto flex flex-col justify-center px-6 pt-8 md:justify-start lg:w-[28rem]"> 
