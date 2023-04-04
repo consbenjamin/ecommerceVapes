@@ -1,8 +1,93 @@
-import React from 'react';
+import React, { useState } from 'react';
 import registerImg from '../../assets/registerImg.jpg';
 import googleLogo from '../../assets/googleLogo.png';
+import { useSelector, useDispatch } from 'react-redux';
+import { registerUser } from '../../redux/actions';
+
+
 
 export default function Register() {
+
+  ///// EXPRESIONES REGULARES /////
+  const expNombre = /^[a-zA-Z\s]{3,15}$/;
+  const expCorreo = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$/;
+  const expContraseña = /^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$/;
+
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
+
+  const [error, setError] = useState({});
+
+  const [userData, setUserData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    repeatPassword: '',
+  });
+
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(registerUser(userData));
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setUserData((prevUserData) => ({
+      ...prevUserData,
+      [name]: value,
+    }));
+    const updatedErrors = validation({
+      ...userData,
+      [name] : value,
+    });
+    setError(updatedErrors);
+  };
+  
+
+  ///// VALIDACIONES /////
+
+  function validation(userData) {
+    let errors = {};
+
+    if (!userData.firstName) {
+      errors.firstName = "El nombre es requerido.";
+    } else if (!expNombre.test(userData.firstName)) {
+      errors.firstName =
+        "Tu Nombre debe contener más de 3 caracteres o no pasarte de los 15, y no puede contener numeros.";
+    }
+
+    if (!userData.lastName) {
+      errors.lastName = "El Apellido es requerido.";
+    } else if (!expNombre.test(userData.lastName)) {
+      errors.lastName =
+        "Tu Apellido debe contener más de 3 caracteres o no pasarte de los 15, y no puede contener numeros.";
+    }
+
+    if (!userData.email) {
+      errors.email = "El email es requerido.";
+    } else if (!expCorreo.test(userData.email)) {
+      errors.email = "Esto no parece un email.";
+    }
+
+    if (!userData.password) {
+      errors.password = "La contraseña es requerida.";
+    } else if (!expContraseña.test(userData.password)) {
+      errors.password =
+        "Tu contraseña debe tener al menos 8 caracteres, con al menos una letra minúscula, una mayúscula, un dígito y un caracter especial.";
+    }
+
+    if (!userData.repeatPassword) {
+      errors.repeatPassword = "Repite tu contraseña.";
+    } else if (userData.password !== userData.repeatPassword) {
+      errors.repeatPassword = "Tu contraseña no coincide.";
+    }
+    return errors;
+  }
+
+
+
   return (
     <div className="flex w-screen flex-wrap text-slate-800 ">
       <div className="pointer-events-none relative hidden h-screen select-none bg-black md:block md:w-1/2">
@@ -24,28 +109,43 @@ export default function Register() {
           <div className="relative mt-8 flex h-px place-items-center bg-gray-200">
             <div className="absolute left-1/2 h-6 -translate-x-1/2 bg-white px-4 text-center text-sm text-gray-500">Or use email instead</div>
           </div>
-          <form className="flex flex-col items-stretch pt-3 md:pt-8">
+          <form onSubmit={handleSubmit} className="flex flex-col items-stretch pt-3 md:pt-8">
             <div className="flex flex-col pt-4">
               <div className="relative flex overflow-hidden rounded-md border-2 transition focus-within:border-blue-600">
-                <input type="text" id="login-name" class="w-full flex-shrink appearance-none border-gray-300 bg-white py-2 px-4 text-base text-gray-700 placeholder-gray-400 focus:outline-none" placeholder="Name" />
+                <input type="text" name='firstName' value={userData.firstName} onChange={handleChange} placeholder="First Name"
+                className="w-full flex-shrink appearance-none border-gray-300 bg-white py-2 px-4 text-base text-gray-700 placeholder-gray-400 focus:outline-none"/>
+                {error.firstName && (<span>{error.firstName}</span>)}
               </div>
             </div>
             <div className="flex flex-col pt-4">
               <div className="relative flex overflow-hidden rounded-md border-2 transition focus-within:border-blue-600">
-                <input type="text" id="login-lastName" class="w-full flex-shrink appearance-none border-gray-300 bg-white py-2 px-4 text-base text-gray-700 placeholder-gray-400 focus:outline-none" placeholder="Last Name" />
+                <input type="text" name='lastName' value={userData.lastName} onChange={handleChange} placeholder="Last Name" 
+                className="w-full flex-shrink appearance-none border-gray-300 bg-white py-2 px-4 text-base text-gray-700 placeholder-gray-400 focus:outline-none"/>
+                {error.lastName && (<span>{error.lastName}</span>)}
               </div>
             </div>
             <div className="flex flex-col pt-4">
               <div className="relative flex overflow-hidden rounded-md border-2 transition focus-within:border-blue-600">
-                <input type="email" id="login-email" class="w-full flex-shrink appearance-none border-gray-300 bg-white py-2 px-4 text-base text-gray-700 placeholder-gray-400 focus:outline-none" placeholder="Email" />
+                <input type="email" name='email' value={userData.email} onChange={handleChange} placeholder="Email"
+                className="w-full flex-shrink appearance-none border-gray-300 bg-white py-2 px-4 text-base text-gray-700 placeholder-gray-400 focus:outline-none"/>
+                {error.email && (<span>{error.email}</span>)}
+              </div>
+            </div>
+            <div className="flex flex-col pt-4">
+              <div className="relative flex overflow-hidden rounded-md border-2 transition focus-within:border-blue-600">
+                <input type="password" name='password' value={userData.password} onChange={handleChange} placeholder="Password (Min. 8 characters)"
+                className="w-full flex-shrink appearance-none border-gray-300 bg-white py-2 px-4 text-base text-gray-700 placeholder-gray-400 focus:outline-none"/>
+                {error.password && (<span>{error.password}</span>)}
               </div>
             </div>
             <div className="mb-4 flex flex-col pt-4">
               <div className="relative flex overflow-hidden rounded-md border-2 transition focus-within:border-blue-600">
-                <input type="password" id="login-password" class="w-full flex-shrink appearance-none border-gray-300 bg-white py-2 px-4 text-base text-gray-700 placeholder-gray-400 focus:outline-none" placeholder="Password (minimum 8 characters)" />
+                <input type="password" name='repeatPassword' value={userData.repeatPassword} onChange={handleChange} placeholder="Repeat Password"
+                className="w-full flex-shrink appearance-none border-gray-300 bg-white py-2 px-4 text-base text-gray-700 placeholder-gray-400 focus:outline-none"/>
+                {error.repeatPassword && (<span>{error.repeatPassword}</span>)}
               </div>
             </div>
-            <button type="submit" className="mt-6 rounded-lg bg-primary px-4 py-2 text-center text-base font-semibold text-white shadow-md hover:bg-purple-700 md:w-32">
+            <button type="submit" className="mt-6 rounded-lg bg-primary px-4 py-2 text-center text-base font-semibold text-white shadow-md hover:bg-blue-700 md:w-32">
               Register
             </button>
           </form>

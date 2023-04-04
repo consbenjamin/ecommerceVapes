@@ -1,10 +1,11 @@
-import { GET_PRODUCTS, POST_PRODUCTS, EDIT_PRODUCT, GET_PRODUCT_BY_ID } from "./actions";
+import { GET_PRODUCTS, POST_PRODUCTS, EDIT_PRODUCT, GET_PRODUCT_BY_ID, POST_REGISTER_USER, LOGIN_SUCCESS, LOGIN_ERROR } from "./actions";
 
 
 const initialState = {
   allProducts: [],
   user: [],
   token: [],
+  error: null,
 };
 
 
@@ -40,6 +41,26 @@ export default function rootReducer (state = initialState, action) {
           }
           return product;
         })
+      }
+    }
+    case POST_REGISTER_USER: {
+      return {
+        ...state,
+        user: action.payload
+      }
+    }
+    case LOGIN_SUCCESS: {
+      return {
+        ...state,
+        user: action.payload.user,
+        token: action.payload.token,
+        error: null
+      }
+    }
+    case LOGIN_ERROR: {
+      return {
+        ...state,
+        error: action.payload
       }
     }
     default: return state;
