@@ -57,11 +57,32 @@ const getProductsById = async (req, res) => {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-const postProducts = async (name, img, description, price, flavor, id) => {
+const getProductByName = async (req, res) => {
   try {
-    return await Product.create({name, img, description, price, flavor, id})
+    const { name } = req.params;
+
+    const product = await Product.findOne({ where: { name } });
+
+    if (product) {
+      res.status(200).json(product);
+    } else {
+      res.status(404).json({ message: 'No se encontró el producto con el nombre especificado' });
+    }
   } catch (error) {
     console.log(error);
+    res.status(500).json({ message: 'Ocurrió un error al intentar obtener el producto' });
+  }
+};
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+const postProducts = async (req, res) => {
+  try {
+    const {name, img, description, price, flavor, id} = req.body;
+    const product = await Product.create({name, img, description, price, flavor, id});
+    res.status(200).send(product);
+  } catch (error) {
+    res.status(400).send({message: `Error al crear producto: ${error.message}`});
   }
 };
 
@@ -123,7 +144,7 @@ const editProduct = async (req, res) => {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-module.exports = {getProducts, getProductsById, postProducts, deleteProduct, editProduct};
+module.exports = {getProducts, getProductsById, getProductByName , postProducts, deleteProduct, editProduct};
 
 
 

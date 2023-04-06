@@ -1,15 +1,21 @@
-import { GET_PRODUCTS, POST_PRODUCTS, EDIT_PRODUCT, GET_PRODUCT_BY_ID, POST_REGISTER_USER, LOGIN_SUCCESS, LOGIN_ERROR } from "./actions";
+import { GET_PRODUCTS, GET_PRODUCTS_BY_NAME, POST_PRODUCTS, EDIT_PRODUCT, GET_PRODUCT_BY_ID, POST_REGISTER_USER, LOGIN_SUCCESS, LOGIN_ERROR, CART_ADD, CART_REMOVE, CART_UP, CART_DOWN } from "./actions";
 
 
-const initialState = {
-  allProducts: [],
-  user: [],
-  token: [],
-  error: null,
-};
+const initialState = () => {
+  const cartInLocalStorage = localStorage.getItem("cart")
+  const initialCart = cartInLocalStorage ? JSON.parse(cartInLocalStorage) : []
+  return {
+    allProducts: [],
+    user: [],
+    token: [],
+    error: null,
+    cart: initialCart,
+    numberCart: initialCart.length,
+  };
+}
 
 
-export default function rootReducer (state = initialState, action) {
+export default function rootReducer (state = initialState(), action) {
   switch(action.type) {
     case GET_PRODUCTS: {
       return {
@@ -21,6 +27,12 @@ export default function rootReducer (state = initialState, action) {
       return {
         ...state,
         allProducts: action.payload,
+      }
+    }
+    case GET_PRODUCTS_BY_NAME: {
+      return {
+        ...state,
+        allProducts: action.payload
       }
     }
     case POST_PRODUCTS: {
@@ -63,6 +75,72 @@ export default function rootReducer (state = initialState, action) {
         error: action.payload
       }
     }
-    default: return state;
+    case CART_ADD: {
+      if (state.numberCart === 0) {
+          let cart = {
+              id: action.payload.id,
+              quantity: 1,
+              name: action.payload.name,
+              img: action.payload.img,
+              price: action.payload.price,
+              flavor: action.payload.flavor
+          }
+          state.cart.push(cart);
+      }
+      else {
+          let check = false;
+          state.cart.forEach((item, key) => {
+              if (item.id === action.payload.id) {
+                  state.cart[key].quantity++;
+                  check = true;
+              };
+          });
+          if (!check) {
+              let _cart = {
+                  id: action.payload.id,
+                  quantity: 1,
+                  name: action.payload.name,
+                  img: action.payload.img,
+                  price: action.payload.price,
+                  flavor: action.payload.flavor
+              }
+              state.cart.push(_cart);
+          }
+      }
+      localStorage.setItem('cart', JSON.stringify(state.cart))
+          return {
+          ...state,
+          numberCart: state.numberCart + 1
+      }
+    }
+    case CART_REMOVE: {
+      const newCart = state.cart.filter(item => item.id !== action.payload)
+      localStorage.setItem('cart', JSON.stringify(newCart))
+      return {
+          ...state,
+          cart: newCart
+      }
+    }
+    case CART_UP:
+      state.numberCart++
+      state.cart[action.payload].quantity++;
+      localStorage.setItem('cart', JSON.stringify(state.cart))
+      return {
+          ...state
+      }
+    case CART_DOWN: {
+      let quantity = state.cart[action.payload].quantity;
+      if (quantity > 1) {
+          state.numberCart--;
+          state.cart[action.payload].quantity--;
+
+          localStorage.setItem('cart', JSON.stringify(state.cart))
+          return {
+              ...state
+          }
+      }
+    }
+    default: 
+      return state;
   }
 };

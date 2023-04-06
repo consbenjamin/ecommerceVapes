@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import registerImg from '../../assets/registerImg.jpg';
 import googleLogo from '../../assets/googleLogo.png';
 import { useSelector, useDispatch } from 'react-redux';
@@ -25,13 +25,27 @@ export default function Login() {
     try {
       const response = await dispatch(loginUser(userData.email, userData.password));
 
-      const { token } = response.payload;
-      console.log(token)
-      console.log(response)
-
-      localStorage.setItem('token', token);
-
       if (response.type === 'LOGIN_SUCCESS') { 
+        const { token, user } = response.payload;
+        console.log(token)
+        console.log(response)
+
+        localStorage.setItem('token', token);
+        localStorage.setItem("userId",user.id );
+        localStorage.setItem("firstName",user.firstName);
+        localStorage.setItem("email",user.email);
+        localStorage.setItem("image",user.img);
+
+        const tokenFront = localStorage.getItem("token", token);
+
+        const config = {
+          headers:{
+            authorization: tokenFront,
+          }
+        } 
+        console.log(config)
+
+      
         return Swal.fire({
           icon: 'success',
           title: '¡Inicio de sesión exitoso!',
@@ -40,7 +54,8 @@ export default function Login() {
           showConfirmButton: false
         }).then(() => {
           window.location.href = '/';
-        }); 
+          
+        })
       } else {
         setError({ message: "Error de inicio de sesión. Por favor, inténtelo de nuevo." });
         Swal.fire({
@@ -92,7 +107,7 @@ export default function Login() {
         </div>
         <img className="-z-1 absolute top-0 h-full w-full object-cover opacity-90" src={registerImg} alt='registerImg'/>
       </div>
-      <div className="flex w-full flex-col md:w-1/2">
+      <div className="flex w-full flex-col mt-[200px] items-center md:w-1/2 md:mt-[100px]">
         <div className="my-auto mx-auto flex flex-col justify-center px-6 pt-8 md:justify-start lg:w-[28rem]"> 
           <p className="text-center text-3xl font-bold md:text-left md:leading-tight">Log in to your account</p>
           <p className="mt-6 text-center font-medium md:text-left">

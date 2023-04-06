@@ -1,4 +1,4 @@
-const { User } = require('../db');
+const { User, Cart, Product } = require('../db');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
@@ -80,6 +80,53 @@ const getUsers = async (req, res) => {
 
 ///////////////////////////////////////////////////////////////
 
+const addToCart = async (req, res) => {
+  const { userId } = req.params;
+  const { productId, quantity } = req.body;
+
+  try {
+    const user = await User.findByPk(userId);
+    const product = await Product.findByPk(productId);
+
+    if (!user || !product) {
+      return res.status(404).send('User or product not found');
+    }
+
+    const [cart, created] = await Cart.findOrCreate({
+      where: { userId },
+      include: [Product],
+    });
+
+    await cart.addProduct(product, { through: { quantity } });
+
+    return res.status(201).send('Product added to cart');
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send('Server error');
+  }
+};
+
+///////////////////////////////////////////////////////////////
+
+const getCart = async (req, res) => {
+  const { userId } = req.params;
+
+  try {
+    const cart = await Cart.findOne({
+      where: { userId },
+      include: [{ model: Product }],
+    });
+
+    if (!cart) {
+      return res.status(404).send('Cart not found');
+    }
+
+    return res.status(200).json(cart);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send('Server error');
+  }
+};
 
 
-module.exports = { postRegister, postLogin, findUserById, getUsers };
+module.exports = { postRegister, postLogin, findUserById, getUsers, addToCart, getCart };

@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 export const GET_PRODUCTS = 'GET_PRODUCTS';
+export const GET_PRODUCTS_BY_NAME = 'GET_PRODUCTS_BY_NAME';
 export const POST_PRODUCTS = 'POST_PRODUCTS';
 export const EDIT_PRODUCT = 'EDIT_PRODUCT';
 export const GET_PRODUCT_BY_ID = 'GET_PRODUCT_BY_ID';
@@ -8,6 +9,13 @@ export const POST_REGISTER_USER = 'POST_REGISTER_USER';
 
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_ERROR = 'LOGIN_ERROR';
+
+export const CART_ADD = 'CART_ADD';
+export const CART_REMOVE = 'CART_REMOVE';
+export const CART_UP = 'CART_UP';
+export const CART_DOWN = 'CART_DOWN';
+
+
 
 
 export const getProducts = () => {
@@ -62,6 +70,23 @@ export function getProductsById(id) {
   }
 };
 
+export function getProductsByName(name) {
+  return async function(dispatch) {
+    try{
+      let json = await axios.get(`http://localhost:3001/products/name/${name}`); 
+      return dispatch({
+        type: GET_PRODUCTS_BY_NAME,
+        payload: json.data
+      })
+    }
+    catch(error){
+      console.log(`${name} no existe`)
+    }
+  }
+};
+
+
+
 export function registerUser(userData) {
   return async function (dispatch) {
     try {
@@ -93,3 +118,55 @@ export function loginUser(email, password) {
     }
   }
 };
+
+export function cartAdd(payload){
+  let id = localStorage.getItem('userId')
+  if(id) {
+      return async function(dispatch){
+          dispatch({
+              type: CART_ADD,
+              payload
+          })
+      console.log(payload);
+      await axios.put(`http://localhost:3001/login/updateCart/${id}`, payload)
+      }
+  } else { //CORREGIR QUE ESTO ESTA MAL
+    const error = new Error("Tienes que tener tu sesión iniciada para agregar cosas al carrito");
+    return function (dispatch) {
+      dispatch({
+        type: CART_ADD,
+        payload
+      });
+      console.error(error);
+      throw error;
+    };
+  } 
+};
+
+export function cartRemove(payload){
+  return async function(dispatch){
+      dispatch({
+          type: CART_REMOVE,
+          payload
+      })
+  }
+};
+
+export function cartUp(payload){
+  return async function(dispatch){
+      dispatch({
+          type: CART_UP,
+          payload
+      })
+  }
+};
+
+export function cartDown(payload){
+  return async function(dispatch){
+      dispatch({
+          type: CART_DOWN,
+          payload
+      })
+  }
+};
+
