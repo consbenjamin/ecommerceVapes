@@ -118,7 +118,8 @@ export default function rootReducer (state = initialState(), action) {
       localStorage.setItem('cart', JSON.stringify(newCart))
       return {
           ...state,
-          cart: newCart
+          cart: newCart,
+          numberCart: newCart.length
       }
     }
     case CART_UP:

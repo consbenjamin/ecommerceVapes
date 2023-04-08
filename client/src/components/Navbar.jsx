@@ -12,6 +12,9 @@ export default function Navbar() {
 
   const [open, setOpen] = useState(false);
 
+  const cartItems = useSelector(state => state.numberCart);
+  
+
   const loggedInUser = localStorage.getItem("firstName");
   const token = localStorage.getItem('token');
 
@@ -52,7 +55,7 @@ export default function Navbar() {
               <li><Link className='font-medium' to={'/login'}>Log In</Link></li>
             </ul>
           </div> 
-          <BsFillCartFill size={25} className='text-black'/>
+          <BsFillCartFill size={25} className='text-black hidden'/>
         </div> 
         : <div className='flex items-center gap-5 '>
             <div className="dropdown dropdown-hover dropdown-end">
@@ -62,7 +65,10 @@ export default function Navbar() {
                 <li><button className='font-medium' onClick={handleLoginOut}>Log Out</button></li>
               </ul> 
             </div>
-          <Link to={'/cart'}><BsFillCartFill size={25} className='text-black'/></Link>
+          <Link className='flex items-center' to={'/cart'}>
+            <BsFillCartFill size={25} className='text-black'/>
+            <span className='text-base font-sans font-bold bg-red-500 rounded-full px-[7px] mb-[16px] h-[23px] absolute ml-[16px] scale-[85%] hover:bg-red-400'>{cartItems}</span>
+          </Link>
           </div> 
           }
 
