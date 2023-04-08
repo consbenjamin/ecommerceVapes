@@ -1,5 +1,6 @@
 const { Product } = require('../db');
 const data = require('../data.json');
+const { Op } = require('sequelize');
 
 
 const getProducts = async (req, res) => {
@@ -57,11 +58,11 @@ const getProductsById = async (req, res) => {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-const getProductByName = async (req, res) => {
+const getProductsByName = async (req, res) => {
   try {
     const { name } = req.params;
 
-    const product = await Product.findOne({ where: { name } });
+    const product = await Product.findAll({ where: { name: { [Op.iLike]: `%${name.toLowerCase()}%` } } });
 
     if (product) {
       res.status(200).json(product);
@@ -144,7 +145,7 @@ const editProduct = async (req, res) => {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-module.exports = {getProducts, getProductsById, getProductByName , postProducts, deleteProduct, editProduct};
+module.exports = {getProducts, getProductsById, getProductsByName , postProducts, deleteProduct, editProduct};
 
 
 

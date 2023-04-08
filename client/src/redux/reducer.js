@@ -76,7 +76,9 @@ export default function rootReducer (state = initialState(), action) {
       }
     }
     case CART_ADD: {
+      // Se verifica si el número de elementos en el carrito es igual a 0
       if (state.numberCart === 0) {
+        // Si es así, se crea un objeto para el carrito con la información del producto a añadir
           let cart = {
               id: action.payload.id,
               quantity: 1,
@@ -85,16 +87,20 @@ export default function rootReducer (state = initialState(), action) {
               price: action.payload.price,
               flavor: action.payload.flavor
           }
+          // Se agrega el objeto del carrito al array del estado
           state.cart.push(cart);
       }
+      // Si el carrito ya tiene elementos, se verifica si el producto a añadir ya está en el carrito
       else {
           let check = false;
           state.cart.forEach((item, key) => {
               if (item.id === action.payload.id) {
+                // Si el producto ya está en el carrito, se incrementa la cantidad
                   state.cart[key].quantity++;
                   check = true;
               };
           });
+          // Si el producto no está en el carrito, se crea un objeto para el carrito con la información del producto a añadir
           if (!check) {
               let _cart = {
                   id: action.payload.id,
@@ -104,10 +110,13 @@ export default function rootReducer (state = initialState(), action) {
                   price: action.payload.price,
                   flavor: action.payload.flavor
               }
+              // Se agrega el objeto del carrito al array del estado
               state.cart.push(_cart);
           }
       }
+      // Se actualiza el carrito en el almacenamiento local
       localStorage.setItem('cart', JSON.stringify(state.cart))
+      // Se retorna un nuevo objeto del estado con el número de elementos en el carrito actualizado
           return {
           ...state,
           numberCart: state.numberCart + 1

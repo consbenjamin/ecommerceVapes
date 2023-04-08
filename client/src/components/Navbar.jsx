@@ -6,6 +6,7 @@ import { FaWallet } from 'react-icons/fa';
 import { HiSearch } from "react-icons/hi";
 import { MdFavorite, MdHelp } from 'react-icons/md';
 import { Link } from 'react-router-dom';
+import SearchBar from './SearchBar';
 
 
 export default function Navbar() {
@@ -41,10 +42,11 @@ export default function Navbar() {
             Vape<span className='font-normal text-black'>Club</span>
         </h1>
         {/* Search Input */}
-        <div className=' bg-gray-200 rounded-lg hidden items-center px-2 sm:flex w-[200px] lg:w-[300px]'>
+        {/* <div className=' bg-gray-200 rounded-lg hidden items-center px-2 sm:flex w-[200px] lg:w-[300px]'>
           <HiSearch size={25}/>
           <input className='bg-transparent p-2 focus: outline-none w-full' type="text" placeholder='Buscar' />
-        </div>
+        </div> */}
+        <SearchBar/>
         {/* Icons */}
         {!token ? 
         <div className='flex items-center gap-5 '>
@@ -67,7 +69,7 @@ export default function Navbar() {
             </div>
           <Link className='flex items-center' to={'/cart'}>
             <BsFillCartFill size={25} className='text-black'/>
-            <span className='text-base font-sans font-bold bg-red-500 rounded-full px-[7px] mb-[16px] h-[23px] absolute ml-[16px] scale-[85%] hover:bg-red-400'>{cartItems}</span>
+            <span className=' text-white text-base font-sans font-bold bg-red-500 rounded-full px-[7px] mb-[16px] h-[23px] absolute ml-[16px] scale-[85%] hover:bg-red-400'>{cartItems}</span>
           </Link>
           </div> 
           }

@@ -14,26 +14,27 @@ export default function Cards() {
     dispatch(getProducts())
 }, [dispatch])
 
-
-  if (!products.length) return (
-    <h1>loading...</h1>
-  )
   return (
-    <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5'>
-      {products?.map((el) => {
-        return (
-          <Card
-          key={el.id}
-          name={el.name}
-          description={el.description}
-          price={el.price}
-          flavor={el.flavor}
-          img={el.img}
-          id={el.id}
-          />
-        )
-      })}
-    </div>
+    products.length ?
+      <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 '>
+        {products.map((el) => {
+          return (
+            <Card
+              key={el.id}
+              name={el.name}
+              description={el.description}
+              price={el.price}
+              flavor={el.flavor}
+              img={el.img}
+              id={el.id}
+            />
+          )
+        })}
+      </div>
+    :
+      <>
+      <h1>loading...</h1>
+      </>
   )
 }
 

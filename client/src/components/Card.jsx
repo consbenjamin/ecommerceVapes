@@ -14,15 +14,15 @@ export default function Card({name, price, flavor, img, id}) {
               <p className='text-lg capitalize font-medium text-gray-400'>{flavor}</p>
             </div>
             <div className="my-1">
-              <button className="block text-xl font-semibold text-gray-700 cursor-auto">${price}</button>
+              <button className="block text-xl font-semibold text-gray-700">${price}</button>
             </div>
-            <div className=''>
-            <button className='text-lg bg-gray-900 font-semibold hover:bg-gray-800 text-white rounded-lg shadow w-full py-2 flex items-center justify-center'>
+            
+            {/* <button className='text-lg bg-gray-900 font-semibold hover:bg-gray-800 text-white rounded-lg shadow w-full py-2 flex items-center justify-center'>
               <div className='px-4 ml-[-36px]'>
                 <HiOutlineShoppingCart size={20}/>
               </div>Agregar al carro
-            </button>
-            </div>
+            </button> */}
+            
           </div>
         </div>
       </div>

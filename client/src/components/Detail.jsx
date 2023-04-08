@@ -63,12 +63,6 @@ export default function Detail() {
                 <button type="button" className="flex-0 aspect-square mb-3 h-20 overflow-hidden rounded-lg border-2 border-gray-900 text-center">
                   <img className="h-full w-full object-cover" src={product.img} alt="" />
                 </button>
-                <button type="button" className="flex-0 aspect-square mb-3 h-20 overflow-hidden rounded-lg border-2 border-transparent text-center">
-                  <img className="h-full w-full object-cover" src={product.img} alt="" />
-                </button>
-                <button type="button" className="flex-0 aspect-square mb-3 h-20 overflow-hidden rounded-lg border-2 border-transparent text-center">
-                  <img className="h-full w-full object-cover" src={product.img} alt="" />
-                </button>
               </div>
             </div>
           </div>
@@ -98,7 +92,7 @@ export default function Detail() {
             <p className="ml-2 text-sm font-medium text-gray-500">1,209 Reviews</p>
           </div>
     
-          <h2 className="mt-8 text-base text-gray-900">Flavors</h2>
+          <h2 className="mt-8 text-base text-gray-900">Flavors:</h2>
           <div className="mt-3 flex select-none flex-wrap items-center gap-1">
             <label className="">
               <input type="radio" name="type" value="Powder" className="peer sr-only" />
