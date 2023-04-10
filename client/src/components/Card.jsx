@@ -5,9 +5,9 @@ import { HiOutlineShoppingCart } from "react-icons/hi";
 export default function Card({name, price, flavor, img, id}) {
   return (
     <Link to={`/detail/${id}`}>
-      <div className="flex p-[20px] sm:p-[2px] md:p-[8px] lg:p-[2px] items-center mt-10 mx-5">
+      <div className="flex p-[20px] sm:p-[2px] md:p-[8px] lg:p-[2px] items-center mt-10 mx-5 justify-center">
         <div className="p-4 bg-white rounded-xl shadow-xl hover:shadow-2xl hover:scale-[1.03] transition-all transform duration-500 ">
-          <img className="bg-cover" src={img} alt="imgNotFound" />
+          <img className="" src={img} alt="imgNotFound" />
           <div>
             <h1 className="text-xl font-bold text-gray-700 lg:text-2xl">{name}</h1>
             <div className='pt-2'>

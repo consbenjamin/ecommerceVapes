@@ -6,6 +6,7 @@ import Detail from './components/Detail.jsx';
 import Register from "./components/account/Register.jsx";
 import Login from "./components/account/Login.jsx";
 import ShoppingCart from "./components/cart/ShoppingCart.jsx";
+import Admin from "./components/admin/Admin.jsx";
 
 function App() {
   return (
@@ -22,6 +23,8 @@ function App() {
           <Route path='/register' element={<Register/>}/>
 
           <Route path='/cart' element={<ShoppingCart/>}/>
+
+          <Route path='/admin' element={<Admin/>}/>
 
         </Routes>
     </>

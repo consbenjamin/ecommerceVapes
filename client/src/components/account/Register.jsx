@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import registerImg from '../../assets/registerImg.jpg';
 import googleLogo from '../../assets/googleLogo.png';
 import { useSelector, useDispatch } from 'react-redux';
-import { registerUser } from '../../redux/actions';
+import { registerUser, loginUser } from '../../redux/actions';
 import Swal from 'sweetalert2';
 
 
@@ -15,7 +15,6 @@ export default function Register() {
   const expContraseña = /^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$/;
 
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
 
   const [error, setError] = useState({});
 
@@ -28,23 +27,47 @@ export default function Register() {
   });
 
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const errors = validation(userData);
     if (Object.keys(errors).length > 0) {
-    Swal.fire({
-      icon: 'error',
-      title: 'Oops...',
-      text: '¡Hubo un error al registrarse! Por favor, verifica los errores en el formulario e inténtalo de nuevo.',
-    });
-  } else {
-    dispatch(registerUser(userData));
-    Swal.fire({
-      icon: 'success',
-      title: '¡Registro exitoso!',
-      text: 'Gracias por registrarte en nuestra plataforma.',
-    });
-  }
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: '¡Hubo un error al registrarse! Por favor, verifica los errores en el formulario e inténtalo de nuevo.',
+      });
+    } else {
+      try {
+        // Aquí puedes hacer la consulta para verificar si el usuario ya está registrado
+        const response = await dispatch(loginUser(userData.email, userData.password));
+        console.log(response)
+        if (response.type === 'LOGIN_SUCCESS') {
+          return Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Este correo electrónico ya está registrado. Por favor, inicie sesión o use otro correo electrónico.',
+          });
+        } else {
+          dispatch(registerUser(userData));
+          return Swal.fire({
+            icon: 'success',
+            title: '¡Registro exitoso!',
+            text: 'Gracias por registrarte, redireccionando al login.',
+            timer: 3000,
+            showConfirmButton: false
+          }).then(() => {
+          window.location.href = '/login';
+          });
+        }
+      } catch (error) {
+        console.error(error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: '¡Hubo un error al registrarse! Por favor, inténtalo de nuevo más tarde.',
+        });
+      }
+    }
   };
 
   const handleChange = (e) => {

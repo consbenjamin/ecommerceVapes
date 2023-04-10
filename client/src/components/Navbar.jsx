@@ -41,11 +41,6 @@ export default function Navbar() {
         <h1 className='text-2xl sm:text-3xl lg:text-4xl font-bold text-black'> 
             Vape<span className='font-normal text-black'>Club</span>
         </h1>
-        {/* Search Input */}
-        {/* <div className=' bg-gray-200 rounded-lg hidden items-center px-2 sm:flex w-[200px] lg:w-[300px]'>
-          <HiSearch size={25}/>
-          <input className='bg-transparent p-2 focus: outline-none w-full' type="text" placeholder='Buscar' />
-        </div> */}
         <SearchBar/>
         {/* Icons */}
         {!token ? 
