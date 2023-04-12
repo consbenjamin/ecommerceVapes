@@ -2,6 +2,7 @@ import React from 'react';
 import { useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { getProducts } from '../../redux/actions';
+import { Link } from 'react-router-dom';
 import CardAdmin from './CardAdmin';
 
 
@@ -24,8 +25,10 @@ export default function Admin() {
       <div className="text-xl font-bold">
         List of Products
       </div>
-      <button class="px-4 py-2 text-white bg-green-500 rounded-md hover:bg-green-600 focus:outline-none">
-        Add new product
+      <button className="px-4 py-2 text-white bg-green-500 rounded-md hover:bg-green-600 focus:outline-none">
+        <Link to='/admin/addProduct'>
+          Add new product
+        </Link>
       </button>
     </div>
     <ul

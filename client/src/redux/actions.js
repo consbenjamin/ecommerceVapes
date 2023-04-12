@@ -3,6 +3,8 @@ import axios from 'axios';
 export const GET_PRODUCTS = 'GET_PRODUCTS';
 export const GET_PRODUCTS_BY_NAME = 'GET_PRODUCTS_BY_NAME';
 export const POST_PRODUCTS = 'POST_PRODUCTS';
+export const DELETE_PRODUCT_SUCCESS = 'DELETE_PRODUCT_SUCCESS';
+export const DELETE_PRODUCT_FAIL = 'DELETE_PRODUCT_FAIL';
 export const EDIT_PRODUCT = 'EDIT_PRODUCT';
 export const GET_PRODUCT_BY_ID = 'GET_PRODUCT_BY_ID';
 export const POST_REGISTER_USER = 'POST_REGISTER_USER';
@@ -55,6 +57,26 @@ export function editProduct(id, newProduct) {
     }
   }
 };
+
+export function deleteProduct(id) {
+  return async function (dispatch) {
+    try {
+      let json = await axios.delete(`http://localhost:3001/products/${id}`);
+      return dispatch({
+        type: DELETE_PRODUCT_SUCCESS,
+        payload: {
+          id: id,
+          message: `El producto con id =${id} fue eliminado exitosamente`,
+      }})
+    } catch (error) {
+      dispatch({
+        type: DELETE_PRODUCT_FAIL,
+        payload: { message: 'Ocurrió un error al intentar eliminar el producto' },
+      });
+    }
+  }
+};
+
 
 export function getProductsById(id) {
   return async function(dispatch) {
@@ -169,4 +191,5 @@ export function cartDown(payload){
       })
   }
 };
+
 

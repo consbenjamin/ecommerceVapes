@@ -7,6 +7,7 @@ import Register from "./components/account/Register.jsx";
 import Login from "./components/account/Login.jsx";
 import ShoppingCart from "./components/cart/ShoppingCart.jsx";
 import Admin from "./components/admin/Admin.jsx";
+import AddProduct from "./components/admin/AddProduct.jsx";
 
 function App() {
   return (
@@ -25,6 +26,8 @@ function App() {
           <Route path='/cart' element={<ShoppingCart/>}/>
 
           <Route path='/admin' element={<Admin/>}/>
+
+          <Route path='/admin/addProduct' element={<AddProduct/>}/>
 
         </Routes>
     </>

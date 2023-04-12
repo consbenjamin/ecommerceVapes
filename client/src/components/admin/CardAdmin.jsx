@@ -1,11 +1,14 @@
 import React from 'react';
-
-
-
+import { useDispatch } from 'react-redux';
+import { deleteProduct } from '../../redux/actions';
 
 
 
 export default function CardAdmin({name, price, img, id}) {
+
+  const dispatch = useDispatch();
+
+
   return (
     <tbody className="text-sm font-normal text-gray-700 text-center">
       <tr className="py-10 bg-gray-100 hover:bg-gray-200 font-medium">
@@ -43,6 +46,7 @@ export default function CardAdmin({name, price, img, id}) {
                   </svg>
                 </button>
                 <button
+                  onClick={() => dispatch(deleteProduct(id))}
                   className="items-center px-2 py-2 text-white bg-red-500 rounded-md hover:bg-red-600 focus:outline-none">
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor">
