@@ -1,6 +1,7 @@
 const { User, Cart, Product } = require('../db');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const { SECRET } = process.env;
 
 
 
@@ -8,14 +9,14 @@ const jwt = require('jsonwebtoken');
 
 const postRegister = async (req, res) => {
   try {
-    const { email, password, userName, firstName, lastName } = req.body;
+    const { email, password, firstName, lastName } = req.body;
     const user = await User.findOne({where: {email} });
     if (user) {
       return res.status(409).json({ message: 'Email already exists' });
     }
     const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = await User.create({ email, password: hashedPassword, userName, firstName, lastName });
-    const token = jwt.sign({ userId: newUser.id }, 'secretKey', { expiresIn: '1h'});
+    const newUser = await User.create({ email, password: hashedPassword, firstName, lastName });
+    const token = jwt.sign({ id: newUser.id }, SECRET, { expiresIn: '1h'});
     return res.status(201).json({ token });
   } catch (error) {
     console.log(error);
@@ -36,7 +37,7 @@ const postLogin = async (req, res) => {
     if (!isPasswordValid) {
       return res.status(401).json({ message: 'Invalid password' });
     }
-    const token = jwt.sign({ id: user.id }, 'secretKey');
+    const token = jwt.sign({ id: user.id }, process.env.SECRET);
     res.status(200).json({ user, token });
   } catch (error) {
     console.error(error);
