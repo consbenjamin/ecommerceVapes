@@ -2,6 +2,7 @@ const { User } = require('../db');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const { SECRET } = process.env;
+const { SECRET_KEY } = process.env;
 
 
 const createAdmin = async (req, res) => {
@@ -19,12 +20,9 @@ const createAdmin = async (req, res) => {
       password: hashedPassword,
       adminPrivileges: true, // adminPrivileges activado
     });
-    const token = jwt.sign({ id: newUser.id, adminPrivileges: newUser.adminPrivileges }, SECRET, { expiresIn: '1h' });
-
-  // guardar el token en localStorage, despues tengo que ver si encrypto el token o lo hago de otra forma
-    localStorage.setItem('adminToken', token);
-
-    res.status(201).json({ token });
+    const token = jwt.sign({ id: newUser.id, adminPrivileges: newUser.adminPrivileges }, SECRET_KEY, { expiresIn: '1h' });
+    res.status(201).json({ message: 'Admin user created successfully', token });
+    
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error" });
@@ -50,6 +48,10 @@ const getAdminUsers = async (req, res) => {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 const deleteUser = async (req, res) => {
   const { userId } = req.params;
   try {
@@ -68,4 +70,4 @@ const deleteUser = async (req, res) => {
 
 
 
-module.exports = { createAdmin, getAdminUsers ,deleteUser };
+module.exports = { createAdmin, getAdminUsers ,deleteUser, };

@@ -6,7 +6,7 @@ const verifyToken = async (req, res, next) => {
   try {
     const token = req.headers.authorization?.split(' ')[1]
     if (!token) {
-      return res.status(401).json({ message: 'Unauthorized' });
+      return res.status(401).json({ message: 'No token has been provided' });
     }
     const decodedToken = jwt.verify(token, SECRET);
     const user = await User.findByPk(decodedToken.id, { attributes: { exclude: ['password'] } });
@@ -38,6 +38,7 @@ const isAdmin = async (req, res, next) => {
     res.status(401).json({ message: "Unauthorized" });
   }
 };
+
 
 
 module.exports = { verifyToken, isAdmin };

@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 export default function AddProduct() {
   const dispatch = useDispatch();
 
+  var adminPrivileges= JSON.parse(localStorage.getItem("adminPrivileges"));
 
   const [formData, setFormData] = useState({
     name: '',
@@ -58,56 +59,65 @@ export default function AddProduct() {
     }
   };
 
+  if (adminPrivileges === null || adminPrivileges === undefined || adminPrivileges === "" || adminPrivileges === false || isNaN(adminPrivileges)) {
+    return (
+      <div className='mt-[250px] flex justify-center'>
+        <h1 className='text-3xl'>No tienes permisos de administrador</h1>
+      </div>
+    );
+  }
 
-  return (
-    <div className="mt-[150px] max-w-screen-md border px-4 shadow-xl sm:mx-4 sm:rounded-xl sm:px-4 sm:py-4 md:mx-auto">
-      <div className="flex flex-col border-b py-4 sm:flex-row sm:items-start">
-        <div className="shrink-0 mr-auto sm:py-3">
-          <p className="font-medium">Add Product</p>
-          <p className="text-sm text-gray-600">Add new product </p>
+  else if (adminPrivileges === true) {
+    return (
+      <div className="mt-[150px] max-w-screen-md border px-4 shadow-xl sm:mx-4 sm:rounded-xl sm:px-4 sm:py-4 md:mx-auto">
+        <div className="flex flex-col border-b py-4 sm:flex-row sm:items-start">
+          <div className="shrink-0 mr-auto sm:py-3">
+            <p className="font-medium">Add Product</p>
+            <p className="text-sm text-gray-600">Add new product </p>
+          </div>
+          <Link to={'/admin'}>
+            <button className="mr-2 hidden rounded-lg border-2 px-4 py-2 font-medium text-gray-500 sm:inline focus:outline-none focus:ring hover:bg-gray-200">Cancel</button>
+          </Link>
+          <button onClick={handleSubmit} 
+          className="hidden rounded-lg border-2 border-transparent bg-blue-600 px-4 py-2 font-medium text-white sm:inline focus:outline-none focus:ring hover:bg-blue-700">Save</button>
         </div>
-        <Link to={'/admin'}>
-          <button className="mr-2 hidden rounded-lg border-2 px-4 py-2 font-medium text-gray-500 sm:inline focus:outline-none focus:ring hover:bg-gray-200">Cancel</button>
-        </Link>
-        <button onClick={handleSubmit} 
-        className="hidden rounded-lg border-2 border-transparent bg-blue-600 px-4 py-2 font-medium text-white sm:inline focus:outline-none focus:ring hover:bg-blue-700">Save</button>
-      </div>
-      <div className="flex flex-col gap-4 border-b py-4 sm:flex-row">
-        <p className="shrink-0 w-32 font-medium">Name</p>
-        <input placeholder="Name" name="name" value={formData.name} onChange={handleChange} 
-        className="mb-2 w-full rounded-md border bg-white px-2 py-2 outline-none ring-blue-600 sm:mr-4 sm:mb-0 focus:ring-1" />
-        <p className="shrink-0 w-20 font-medium">Price</p>
-        <input placeholder="Price" name="price" value={formData.price} onChange={handleChange}
-        className="w-full rounded-md border bg-white px-2 py-2 outline-none ring-blue-600 focus:ring-1" />
-      </div>
-      <div className="flex flex-col gap-4 border-b py-4 sm:flex-row">
-        <p className="shrink-0 w-32 font-medium">Description</p>
-        <input placeholder="Description" name="description" value={formData.description} onChange={handleChange}
-        className="w-full rounded-md border bg-white px-2 py-2 outline-none ring-blue-600 focus:ring-1" />
-      </div>
-      <div className="flex flex-col gap-4 border-b py-4 sm:flex-row">
-        <p className="shrink-0 w-32 font-medium">Flavor</p>
-        <input placeholder="Flavor" name="flavor" value={formData.flavor} onChange={handleChange} 
-        className="w-[32%] rounded-md border bg-white px-2 py-2 outline-none ring-blue-600 focus:ring-1" />
-      </div>
-      <div className="flex flex-col gap-4 py-4  lg:flex-row">
-        <div className="shrink-0 w-32  sm:py-4">
-          <p className="mb-auto font-medium">Image</p>
-          <p className="text-sm text-gray-600">Choose Image</p>
+        <div className="flex flex-col gap-4 border-b py-4 sm:flex-row">
+          <p className="shrink-0 w-32 font-medium">Name</p>
+          <input placeholder="Name" name="name" value={formData.name} onChange={handleChange} 
+          className="mb-2 w-full rounded-md border bg-white px-2 py-2 outline-none ring-blue-600 sm:mr-4 sm:mb-0 focus:ring-1" />
+          <p className="shrink-0 w-20 font-medium">Price</p>
+          <input placeholder="Price" name="price" value={formData.price} onChange={handleChange}
+          className="w-full rounded-md border bg-white px-2 py-2 outline-none ring-blue-600 focus:ring-1" />
         </div>
-        <div className="flex h-56 w-full flex-col items-center justify-center gap-4 rounded-xl border border-dashed border-gray-300 p-5 text-center">
-          <img src="/images/ddHJYlQqOzyOKm4CSCY8o.png" className="h-16 w-16" />
-          <p className="text-sm text-gray-600">Drop your desired image file here to start the upload</p>
-          <input type="file" onChange={handleImageChange} 
-          className="max-w-full rounded-lg px-2 font-medium text-blue-600 outline-none ring-blue-600 focus:ring-1" />
+        <div className="flex flex-col gap-4 border-b py-4 sm:flex-row">
+          <p className="shrink-0 w-32 font-medium">Description</p>
+          <input placeholder="Description" name="description" value={formData.description} onChange={handleChange}
+          className="w-full rounded-md border bg-white px-2 py-2 outline-none ring-blue-600 focus:ring-1" />
+        </div>
+        <div className="flex flex-col gap-4 border-b py-4 sm:flex-row">
+          <p className="shrink-0 w-32 font-medium">Flavor</p>
+          <input placeholder="Flavor" name="flavor" value={formData.flavor} onChange={handleChange} 
+          className="w-[32%] rounded-md border bg-white px-2 py-2 outline-none ring-blue-600 focus:ring-1" />
+        </div>
+        <div className="flex flex-col gap-4 py-4  lg:flex-row">
+          <div className="shrink-0 w-32  sm:py-4">
+            <p className="mb-auto font-medium">Image</p>
+            <p className="text-sm text-gray-600">Choose Image</p>
+          </div>
+          <div className="flex h-56 w-full flex-col items-center justify-center gap-4 rounded-xl border border-dashed border-gray-300 p-5 text-center">
+            <img src="/images/ddHJYlQqOzyOKm4CSCY8o.png" className="h-16 w-16" />
+            <p className="text-sm text-gray-600">Drop your desired image file here to start the upload</p>
+            <input type="file" onChange={handleImageChange} 
+            className="max-w-full rounded-lg px-2 font-medium text-blue-600 outline-none ring-blue-600 focus:ring-1" />
+          </div>
+        </div>
+        <div className="flex justify-end py-4 sm:hidden">
+          <Link to={'/admin'}>
+            <button className="mr-2 rounded-lg border-2 px-4 py-2 font-medium text-gray-500 focus:outline-none focus:ring hover:bg-gray-200">Cancel</button>
+          </Link>
+          <button onClick={handleSubmit} className="rounded-lg border-2 border-transparent bg-blue-600 px-4 py-2 font-medium text-white focus:outline-none focus:ring hover:bg-blue-700">Save</button>
         </div>
       </div>
-      <div className="flex justify-end py-4 sm:hidden">
-        <Link to={'/admin'}>
-          <button className="mr-2 rounded-lg border-2 px-4 py-2 font-medium text-gray-500 focus:outline-none focus:ring hover:bg-gray-200">Cancel</button>
-        </Link>
-        <button onClick={handleSubmit} className="rounded-lg border-2 border-transparent bg-blue-600 px-4 py-2 font-medium text-white focus:outline-none focus:ring hover:bg-blue-700">Save</button>
-      </div>
-    </div>
-  )
+    )
+  }
 };

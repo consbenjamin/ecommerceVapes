@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { AiFillTag, AiOutlineClose, AiOutlineMenu, AiFillHome } from 'react-icons/ai';
-import { BsFillCartFill, BsFillSaveFill, BsFillPersonFill } from 'react-icons/bs';
+import { BsFillCartFill, BsFillPersonFill } from 'react-icons/bs';
 import { FaWallet } from 'react-icons/fa';
-import { HiSearch } from "react-icons/hi";
+import { MdAdminPanelSettings } from "react-icons/md";
 import { MdFavorite, MdHelp } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import SearchBar from './SearchBar';
@@ -27,9 +27,11 @@ export default function Navbar() {
     localStorage.removeItem("firstName");
     localStorage.removeItem("token");
     localStorage.removeItem("image");
+    localStorage.removeItem("adminPrivileges");
 
     window.location.href = "/login";
   }
+
 
 
   return (
@@ -82,7 +84,9 @@ export default function Navbar() {
                 <li className='text-xl py-4 pl-1 flex'><FaWallet size={25} className='mr-4'/>Wallet</li>
                 <li className='text-xl py-4 pl-1 flex'><MdHelp size={25} className='mr-4'/>Help</li>
                 <li className='text-xl py-4 pl-1 flex'><AiFillTag size={25} className='mr-4'/>Promotions</li>
-                <li className='text-xl py-4 pl-1 flex'><BsFillSaveFill size={25} className='mr-4'/>Best Ones</li>
+                
+                <li className='text-xl py-4 pl-1 flex'><Link className='flex' to= {'/admin'}><MdAdminPanelSettings size={28} className='mr-4'/>Admin Panel</Link></li>
+                
               </ul>
           </div>
         </div>

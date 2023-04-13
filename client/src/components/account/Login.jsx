@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import registerImg from '../../assets/registerImg.jpg';
-import googleLogo from '../../assets/googleLogo.png';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { loginUser } from '../../redux/actions';
 import Swal from 'sweetalert2';
+
 
 
 export default function Login() {
@@ -11,7 +11,6 @@ export default function Login() {
   const expCorreo = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$/;
 
   const dispatch = useDispatch();
-  const loginError = useSelector(state => state.error);
 
   const [userData, setUserData] = useState({
     email: "",
@@ -28,13 +27,18 @@ export default function Login() {
       if (response.type === 'LOGIN_SUCCESS') { 
         const { token, user } = response.payload;
         console.log(token)
+        console.log(user.adminPrivileges)
         console.log(response)
+
 
         localStorage.setItem('token', token);
         localStorage.setItem("userId",user.id );
         localStorage.setItem("firstName",user.firstName);
         localStorage.setItem("email",user.email);
         localStorage.setItem("image",user.img);
+        localStorage.setItem("adminPrivileges", JSON.parse(user.adminPrivileges));
+
+        
 
         const tokenFront = localStorage.getItem("token", token);
 
@@ -114,12 +118,6 @@ export default function Login() {
             Don't have an account?
             <a href="#" className="whitespace-nowrap font-semibold text-blue-700"> Register here</a>
           </p>
-          <button className="mt-8 flex items-center justify-center rounded-md border px-4 py-1">
-            <img className="mr-2 h-5" src={googleLogo} alt />Log in with Google
-          </button>
-          <div className="relative mt-8 flex h-px place-items-center bg-gray-200">
-            <div className="absolute left-1/2 h-6 -translate-x-1/2 bg-white px-4 text-center text-sm text-gray-500">Or use email instead</div>
-          </div>
           <form onSubmit={handleSubmit} className="flex flex-col items-stretch pt-3 md:pt-8">
             <div className="flex flex-col pt-4">
               <div className="relative flex overflow-hidden rounded-md border-2 transition focus-within:border-blue-600">

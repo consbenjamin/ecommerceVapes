@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import registerImg from '../../assets/registerImg.jpg';
-import googleLogo from '../../assets/googleLogo.png';
+// import googleLogo from '../../assets/googleLogo.png';
 import { useSelector, useDispatch } from 'react-redux';
 import { registerUser, loginUser } from '../../redux/actions';
 import Swal from 'sweetalert2';
@@ -141,12 +141,12 @@ export default function Register() {
             Already registered?
             <a href="#" className="whitespace-nowrap font-semibold text-blue-700"> Login here</a>
           </p>
-          <button className="mt-8 flex items-center justify-center rounded-md border px-4 py-1">
+          {/* <button className="mt-8 flex items-center justify-center rounded-md border px-4 py-1">
             <img className="mr-2 h-5" src={googleLogo} alt='googleLogo' />Log in with Google
           </button>
           <div className="relative mt-8 flex h-px place-items-center bg-gray-200">
             <div className="absolute left-1/2 h-6 -translate-x-1/2 bg-white px-4 text-center text-sm text-gray-500">Or use email instead</div>
-          </div>
+          </div> */}
           <form onSubmit={handleSubmit} className="flex flex-col items-stretch pt-3 md:pt-8">
             <div className="flex flex-col pt-4">
               <div className="relative flex overflow-hidden rounded-md border-2 transition focus-within:border-blue-600">

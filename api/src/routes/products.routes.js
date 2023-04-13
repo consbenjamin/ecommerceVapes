@@ -11,9 +11,9 @@ router.get('/name/:name', getProductsByName);
 
 router.post('/', verifyToken, isAdmin, postProducts);
 
-router.delete('/:id', deleteProduct);
+router.delete('/:id', verifyToken, isAdmin, deleteProduct);
 
-router.put('/:id', editProduct);
+router.put('/:id', verifyToken, isAdmin, editProduct);
 
 
 

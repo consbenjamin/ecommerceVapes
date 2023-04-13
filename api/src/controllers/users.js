@@ -5,8 +5,6 @@ const { SECRET } = process.env;
 
 
 
-
-
 const postRegister = async (req, res) => {
   try {
     const { email, password, firstName, lastName } = req.body;
@@ -37,7 +35,7 @@ const postLogin = async (req, res) => {
     if (!isPasswordValid) {
       return res.status(401).json({ message: 'Invalid password' });
     }
-    const token = jwt.sign({ id: user.id }, process.env.SECRET);
+    const token = jwt.sign({ id: user.id, adminPrivileges: user.adminPrivileges }, SECRET);
     res.status(200).json({ user, token });
   } catch (error) {
     console.error(error);

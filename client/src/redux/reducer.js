@@ -1,4 +1,4 @@
-import { GET_PRODUCTS, GET_PRODUCTS_BY_NAME, POST_PRODUCTS, EDIT_PRODUCT, GET_PRODUCT_BY_ID, POST_REGISTER_USER, LOGIN_SUCCESS, LOGIN_ERROR, CART_ADD, CART_REMOVE, CART_UP, CART_DOWN, DELETE_PRODUCT_SUCCESS, DELETE_PRODUCT_FAIL } from "./actions";
+import { GET_PRODUCTS, GET_PRODUCTS_BY_NAME, POST_PRODUCTS, EDIT_PRODUCT, GET_PRODUCT_BY_ID, POST_REGISTER_USER, LOGIN_SUCCESS, LOGIN_ERROR, CART_ADD, CART_REMOVE, CART_UP, CART_DOWN, DELETE_PRODUCT_SUCCESS, DELETE_PRODUCT_FAIL, } from "./actions";
 
 
 const initialState = () => {
@@ -9,6 +9,7 @@ const initialState = () => {
     user: [],
     token: [],
     error: null,
+    admin: false,
     cart: initialCart,
     numberCart: initialCart.length,
   };

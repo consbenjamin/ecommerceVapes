@@ -20,6 +20,7 @@ export const CART_DOWN = 'CART_DOWN';
 
 
 
+
 export const getProducts = () => {
   return async (dispatch) => {
     let json = await axios.get('http://localhost:3001/products'); //Conexion back y front.
@@ -108,7 +109,6 @@ export function getProductsByName(name) {
 };
 
 
-
 export function registerUser(userData) {
   return async function (dispatch) {
     try {
@@ -122,6 +122,7 @@ export function registerUser(userData) {
     }
   }
 };
+
 
 export function loginUser(email, password) {
   return async function (dispatch) {
