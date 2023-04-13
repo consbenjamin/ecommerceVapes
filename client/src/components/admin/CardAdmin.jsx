@@ -1,12 +1,40 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { deleteProduct } from '../../redux/actions';
+import axios from 'axios';
+import Swal from 'sweetalert2';
 
 
 
 export default function CardAdmin({name, price, img, id}) {
 
   const dispatch = useDispatch();
+
+  const token = localStorage.getItem('token');
+
+  const handleSubmit =  (event) => {
+    event.preventDefault();
+    try {
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      dispatch(deleteProduct(id))
+      Swal.fire({
+        title: 'Producto eliminado!',
+        text: 'El producto se elimino correactamente.',
+        icon: 'success',
+        timer: 3000,
+        showConfirmButton: false
+      }).then(() => {
+        window.location.href = '/admin';
+      });
+    } catch (error) {
+      Swal.fire({
+        title: 'Error',
+        text: error.message,
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
+    }
+  };
 
 
   return (
@@ -46,7 +74,7 @@ export default function CardAdmin({name, price, img, id}) {
                   </svg>
                 </button>
                 <button
-                  onClick={() => dispatch(deleteProduct(id))}
+                  onClick={handleSubmit}
                   className="items-center px-2 py-2 text-white bg-red-500 rounded-md hover:bg-red-600 focus:outline-none">
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor">

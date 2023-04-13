@@ -14,6 +14,8 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
 
   const cartItems = useSelector(state => state.numberCart);
+
+  var adminPrivileges= JSON.parse(localStorage.getItem("adminPrivileges"));
   
 
   const loggedInUser = localStorage.getItem("firstName");
@@ -30,7 +32,7 @@ export default function Navbar() {
     localStorage.removeItem("adminPrivileges");
 
     window.location.href = "/login";
-  }
+  };
 
 
 
@@ -84,9 +86,9 @@ export default function Navbar() {
                 <li className='text-xl py-4 pl-1 flex'><FaWallet size={25} className='mr-4'/>Wallet</li>
                 <li className='text-xl py-4 pl-1 flex'><MdHelp size={25} className='mr-4'/>Help</li>
                 <li className='text-xl py-4 pl-1 flex'><AiFillTag size={25} className='mr-4'/>Promotions</li>
-                
+                {adminPrivileges === true ?
                 <li className='text-xl py-4 pl-1 flex'><Link className='flex' to= {'/admin'}><MdAdminPanelSettings size={28} className='mr-4'/>Admin Panel</Link></li>
-                
+                  : null}
               </ul>
           </div>
         </div>

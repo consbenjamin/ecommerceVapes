@@ -18,3 +18,4 @@ router.put('/:id', verifyToken, isAdmin, editProduct);
 
 
 module.exports = router
+

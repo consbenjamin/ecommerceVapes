@@ -153,7 +153,7 @@ export function cartAdd(payload){
       console.log(payload);
       await axios.put(`http://localhost:3001/login/updateCart/${id}`, payload)
       }
-  } else { //CORREGIR QUE ESTO ESTA MAL
+  } else { 
     const error = new Error("Tienes que tener tu sesión iniciada para agregar cosas al carrito");
     return function (dispatch) {
       dispatch({
@@ -192,5 +192,9 @@ export function cartDown(payload){
       })
   }
 };
+
+
+
+
 
 

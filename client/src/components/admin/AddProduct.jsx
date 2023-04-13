@@ -3,12 +3,15 @@ import { useDispatch } from 'react-redux';
 import { postProducts } from '../../redux/actions';
 import Swal from 'sweetalert2';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 
 export default function AddProduct() {
   const dispatch = useDispatch();
 
   var adminPrivileges= JSON.parse(localStorage.getItem("adminPrivileges"));
+
+  const token = localStorage.getItem('token');
 
   const [formData, setFormData] = useState({
     name: '',
@@ -39,6 +42,7 @@ export default function AddProduct() {
   const handleSubmit =  (event) => {
     event.preventDefault();
     try {
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       dispatch(postProducts(formData));
       Swal.fire({
         title: 'Producto creado',

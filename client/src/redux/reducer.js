@@ -1,4 +1,4 @@
-import { GET_PRODUCTS, GET_PRODUCTS_BY_NAME, POST_PRODUCTS, EDIT_PRODUCT, GET_PRODUCT_BY_ID, POST_REGISTER_USER, LOGIN_SUCCESS, LOGIN_ERROR, CART_ADD, CART_REMOVE, CART_UP, CART_DOWN, DELETE_PRODUCT_SUCCESS, DELETE_PRODUCT_FAIL, } from "./actions";
+import { GET_PRODUCTS, GET_PRODUCTS_BY_NAME, POST_PRODUCTS, EDIT_PRODUCT, GET_PRODUCT_BY_ID, POST_REGISTER_USER, LOGIN_SUCCESS, LOGIN_ERROR, CART_ADD, CART_REMOVE, CART_UP, CART_DOWN, DELETE_PRODUCT_SUCCESS, DELETE_PRODUCT_FAIL } from "./actions";
 
 
 const initialState = () => {
@@ -9,7 +9,6 @@ const initialState = () => {
     user: [],
     token: [],
     error: null,
-    admin: false,
     cart: initialCart,
     numberCart: initialCart.length,
   };
@@ -39,7 +38,7 @@ export default function rootReducer (state = initialState(), action) {
     case POST_PRODUCTS: {
       return {
         ...state,  // Crea una copia superficial del estado existente
-        allProducts: [action.payload, ...state.allProducts] // Actualiza la propiedad allProducts con un nuevo array que contiene el nuevo producto al principio y todos los productos existentes después.
+        allProducts: [action.payload, ...state.allProducts],
       }
     }
     case DELETE_PRODUCT_SUCCESS: {
@@ -80,13 +79,13 @@ export default function rootReducer (state = initialState(), action) {
         ...state,
         user: action.payload.user,
         token: action.payload.token,
-        error: null
+        error: null,
       }
     }
     case LOGIN_ERROR: {
       return {
         ...state,
-        error: action.payload
+        error: action.payload,
       }
     }
     case CART_ADD: {
