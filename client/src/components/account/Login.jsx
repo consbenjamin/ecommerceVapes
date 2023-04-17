@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import registerImg from '../../assets/registerImg.jpg';
 import { useDispatch } from 'react-redux';
 import { loginUser } from '../../redux/actions';
 import Swal from 'sweetalert2';
+import { Link } from 'react-router-dom';
 
 
 
@@ -115,8 +116,8 @@ export default function Login() {
         <div className="my-auto mx-auto flex flex-col justify-center px-6 pt-8 md:justify-start lg:w-[28rem]"> 
           <p className="text-center text-3xl font-bold md:text-left md:leading-tight">Log in to your account</p>
           <p className="mt-6 text-center font-medium md:text-left">
-            Don't have an account?
-            <a href="#" className="whitespace-nowrap font-semibold text-blue-700"> Register here</a>
+            Don't have an account? {" "}
+            <Link className='whitespace-nowrap font-semibold text-blue-700' to={'/register'}>Register here</Link>
           </p>
           <form onSubmit={handleSubmit} className="flex flex-col items-stretch pt-3 md:pt-8">
             <div className="flex flex-col pt-4">

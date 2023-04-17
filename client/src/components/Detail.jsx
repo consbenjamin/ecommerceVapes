@@ -110,19 +110,11 @@ export default function Detail() {
             <p className="ml-2 text-sm font-medium text-gray-500">1,209 Reviews</p>
           </div>
     
-          <h2 className="mt-8 text-base text-gray-900">Flavors:</h2>
+          <h2 className="mt-8 text-base text-gray-900">Flavor:</h2>
           <div className="mt-3 flex select-none flex-wrap items-center gap-1">
             <label className="">
               <input type="radio" name="type" value="Powder" className="peer sr-only" />
-              <p className="peer-checked:bg-black peer-checked:text-white rounded-lg border border-black px-6 py-2 font-bold">{product.flavor}</p>
-            </label>
-            <label className="">
-              <input type="radio" name="type" value="Whole Bean" className="peer sr-only" />
-              <p class="peer-checked:bg-black peer-checked:text-white rounded-lg border border-black px-6 py-2 font-bold">Whole Bean</p>
-            </label>
-            <label className="">
-              <input type="radio" name="type" value="Groud" className="peer sr-only" />
-              <p className="peer-checked:bg-black peer-checked:text-white rounded-lg border border-black px-6 py-2 font-bold">Groud</p>
+              <p className="peer-checked:bg-black peer-checked:text-white rounded-md border border-black px-6 py-2 font-bold capitalize">{product.flavor}</p>
             </label>
           </div>
     

@@ -26,6 +26,7 @@ export default function Cards() {
               price={el.price}
               flavor={el.flavor}
               img={el.img}
+              brand={el.brand}
               id={el.id}
             />
           )

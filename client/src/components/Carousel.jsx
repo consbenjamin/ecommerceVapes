@@ -42,7 +42,7 @@ export default function Carousel() {
   };
 
   return (
-    <div className='w-full h-[550px] md:h-[600px] lg:h-[640px] m-auto pt-[72px] relative group z-[1]'>
+    <div className='w-full h-[500px] md:h-[550px] lg:h-[600px] m-auto pt-[72px] relative group z-[1]'>
       <div
         style={{ backgroundImage: `url(${slides[currentIndex].url})` }}
         className='w-full h-full bg-center bg-cover duration-500'

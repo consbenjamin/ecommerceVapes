@@ -8,6 +8,7 @@ import Login from "./components/account/Login.jsx";
 import ShoppingCart from "./components/cart/ShoppingCart.jsx";
 import Admin from "./components/admin/Admin.jsx";
 import AddProduct from "./components/admin/AddProduct.jsx";
+import CardEdit from "./components/admin/CardEdit.jsx";
 
 function App() {
   return (
@@ -28,6 +29,8 @@ function App() {
           <Route path='/admin' element={<Admin/>}/>
 
           <Route path='/admin/addProduct' element={<AddProduct/>}/>
+
+          <Route path='/admin/editProduct' element={<CardEdit/>}/>
 
         </Routes>
     </>

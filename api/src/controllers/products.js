@@ -1,4 +1,4 @@
-const { Product } = require('../db');
+const { Product, Brand } = require('../db');
 const data = require('../data.json');
 const { Op } = require('sequelize');
 
@@ -9,7 +9,8 @@ const getProducts = async (req, res) => {
   if (name) {  
     const productsByName = await Product.findAll({
       where: { name: name },
-      attributes: ["name", "description", "img", "flavor", "price, id"],
+      attributes: ["name", "description", "img", "flavor", "price", "id"],
+      include: [{ model: Brand, attributes: ["name"] }]
     });
     return res.status(200).send(productsByName);
   }
@@ -18,23 +19,30 @@ const getProducts = async (req, res) => {
   const existingProductNames = existingProducts.map(p => p.name);
   
   const allProducts = data.filter(p => !existingProductNames.includes(p.name))
-    .map(p => ({
-      name: p.name,
-      description: p.description,
-      price: p.price,
-      img: p.img,
-      flavor: p.flavor.flavor1,
-      id: p.id
-    }));
+    .map(async p => {
+      let brand = await Brand.findOrCreate({ where: { name: p.brand.name }});
+      return {
+        name: p.name,
+        description: p.description,
+        price: p.price,
+        img: p.img,
+        flavor: p.flavor.flavor1,
+        id: p.id,
+        brandId: brand[0].id
+      };
+    });
 
-  await Product.bulkCreate(allProducts, { updateOnDuplicate: ["name"] });
+  await Product.bulkCreate(await Promise.all(allProducts), { updateOnDuplicate: ["name"] });
 
-  const createdProducts = await Product.findAll({
-    attributes: ["name", "description", "img", "flavor", "price", "id"],
+  const response = await Product.findAll({
+    attributes: ["name", "description", "img", "flavor", "price", "id", ],
+    include: [{ model: Brand, as: 'brand', attributes: ["name"] }]
   });
 
-  return res.status(200).send(createdProducts);
+  return res.status(200).send(response);
 };
+
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -79,9 +87,22 @@ const getProductsByName = async (req, res) => {
 
 const postProducts = async (req, res) => {
   try {
-    const {name, img, description, price, flavor, id} = req.body;
-    const product = await Product.create({name, img, description, price, flavor, id});
-    res.status(200).send(product);
+    const {name, img, description, price, flavor, id, brand} = req.body;
+
+    let brandObj = await Brand.findOne({ where: { name: brand } });
+
+    if (!brandObj) {
+      brandObj = await Brand.create({ name: brand });
+    }
+
+    const product = await Product.create({name, img, description, price, flavor, id, brandId: brandObj.id}, { include: Brand });
+    
+    const createdProduct = await Product.findOne({
+      where: { id: product.id },
+      attributes: ["name", "description", "img", "flavor", "price", "id"],
+      include: [{ model: Brand, as: 'brand', attributes: ["name"] }]
+    });
+    res.status(200).send(createdProduct);
   } catch (error) {
     res.status(400).send({message: `Error al crear producto: ${error.message}`});
   }
@@ -113,7 +134,7 @@ const deleteProduct = async(req, res) => {
 const editProduct = async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, img, description, price, flavor } = req.body;
+    const { name, img, description, price, flavor, brandName } = req.body;
 
     const productDb = await Product.findByPk(id);
 
@@ -122,8 +143,14 @@ const editProduct = async (req, res) => {
     }
 
     // Verificación de campos necesarios
-    if (!name || !img || !description || !price || !flavor) {
+    if (!name || !img || !description || !price || !flavor || !brandName) {
       return res.status(400).json({ message: 'Faltan campos requeridos' });
+    }
+
+    const brand = await Brand.findOne({ where: { name: brandName } });
+
+    if (!brand) {
+      return res.status(404).json({ message: 'No se encontró la marca especificada' });
     }
 
     const updatedProduct = await productDb.update({
@@ -131,7 +158,8 @@ const editProduct = async (req, res) => {
       img,
       description,
       price,
-      flavor
+      flavor,
+      brandId: brand.id,
     });
 
     res.status(200).json(updatedProduct);

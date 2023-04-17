@@ -4,6 +4,7 @@ import { postProducts } from '../../redux/actions';
 import Swal from 'sweetalert2';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import imageFile from '../../assets/imageFile.png';
 
 
 export default function AddProduct() {
@@ -19,6 +20,7 @@ export default function AddProduct() {
     description: '',
     flavor: '',
     img: '',
+    brand: ''
   });
 
   const handleChange = (e) => {
@@ -101,7 +103,10 @@ export default function AddProduct() {
         <div className="flex flex-col gap-4 border-b py-4 sm:flex-row">
           <p className="shrink-0 w-32 font-medium">Flavor</p>
           <input placeholder="Flavor" name="flavor" value={formData.flavor} onChange={handleChange} 
-          className="w-[32%] rounded-md border bg-white px-2 py-2 outline-none ring-blue-600 focus:ring-1" />
+          className="w-full rounded-md border bg-white px-2 py-2 outline-none ring-blue-600 sm:mr-4 sm:mb-0 focus:ring-1" />
+          <p className="shrink-0 w-20 font-medium">Brand</p>
+          <input placeholder="Brand" name="brand" value={formData.brand} onChange={handleChange} 
+          className="w-full rounded-md border bg-white px-2 py-2 outline-none ring-blue-600 sm:mr-4 sm:mb-0 focus:ring-1" />
         </div>
         <div className="flex flex-col gap-4 py-4  lg:flex-row">
           <div className="shrink-0 w-32  sm:py-4">
@@ -109,7 +114,7 @@ export default function AddProduct() {
             <p className="text-sm text-gray-600">Choose Image</p>
           </div>
           <div className="flex h-56 w-full flex-col items-center justify-center gap-4 rounded-xl border border-dashed border-gray-300 p-5 text-center">
-            <img src="/images/ddHJYlQqOzyOKm4CSCY8o.png" className="h-16 w-16" />
+            <img src={imageFile} alt='imgNotFound' className="h-16 w-16" />
             <p className="text-sm text-gray-600">Drop your desired image file here to start the upload</p>
             <input type="file" onChange={handleImageChange} 
             className="max-w-full rounded-lg px-2 font-medium text-blue-600 outline-none ring-blue-600 focus:ring-1" />

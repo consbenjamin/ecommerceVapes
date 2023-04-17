@@ -38,7 +38,7 @@ export default function Navbar() {
 
   return (
     <nav>
-      <div className='flex flex-row justify-around  bg-[#fafbfd] py-4 fixed mx-auto items-center top-0 left-0 right-0 shadow-md z-[2] '>
+      <div className='flex flex-row justify-around bg-[#fafbfd] py-4 fixed mx-auto items-center top-0 left-0 right-0 shadow-md z-[2]'>
         <button onClick={() => setOpen(true)}>
           <AiOutlineMenu size={30} className='text-black'/>
         </button>
