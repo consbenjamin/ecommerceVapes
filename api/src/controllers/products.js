@@ -173,7 +173,23 @@ const editProduct = async (req, res) => {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-module.exports = {getProducts, getProductsById, getProductsByName , postProducts, deleteProduct, editProduct};
+
+const getBrands = async (req, res) => {
+  try {
+    const brands = await Brand.findAll({
+      attributes: ['id', 'name'],
+    });
+
+    res.status(200).json(brands);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error retrieving brands', error: error.message });
+  }
+};
+
+
+
+module.exports = {getProducts, getProductsById, getProductsByName , postProducts, deleteProduct, editProduct, getBrands};
 
 
 

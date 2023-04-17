@@ -1,48 +1,21 @@
 const { Product, Brand } = require("../db");
 
-
-
 const filterByBrand = async (req, res) => {
-  const { brandId } = req.query;
-
-  if (!brandId)
-    return res.status(404).json({ message: "No se econtro ese brand." });
+  const { brandId } = req.params;
 
   try {
-    let products = await Product.findAll({
-      attributes: [
-        "name",
-        "id",
-        "img",
-        "description",
-        "flavor",
-        "price",
-        "brandId",
-      ],
-      include:{
-        model:Brand
-      }
+    const products = await Product.findAll({
+      where: { brandId },
+      include: [{ model: Brand, attributes: ['name'] }],
     });
 
-    let productsBrand = products.filter((el) => el.brandId == brandId);
-    productsBrand.sort(function (a, b) {
-      if (a.id > b.id) {
-        return 1;
-      }
-      if (b.id > a.id) {
-        return -1;
-      }
-      return 0;
-    });
-
-    return productsBrand.length
-      ? res.status(200).send(productsBrand)
-      : res.status(404).send("No se recibio un brand correcto");
-
+    res.status(200).json(products);
   } catch (error) {
     console.error(error);
-    next();
+    res.status(500).json({ message: 'Error retrieving products' });
   }
 };
+
+
 
 module.exports = { filterByBrand }
