@@ -8,16 +8,20 @@ import Card from "./Card";
 
 export default function Cards() {
   const dispatch = useDispatch()
-  const products = useSelector((state) => state.allProducts); //mapeo del estado a las props
+  const allProducts = useSelector((state) => state.allProducts); //mapeo del estado a las props
+  const filteredProducts = useSelector((state) => state.products);
+  const isFilterActive = !!filteredProducts.length;
 
   useEffect(()=>{
     dispatch(getProducts())
 }, [dispatch])
 
+  const productsToRender = isFilterActive ? filteredProducts : allProducts;
+
   return (
-    products.length ?
+    productsToRender.length ?
       <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 '>
-        {products.map((el) => {
+        {productsToRender.map((el) => {
           return (
             <Card
               key={el.id}

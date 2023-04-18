@@ -50,7 +50,9 @@ const getProductsById = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const product = await Product.findByPk(id);
+    const product = await Product.findByPk(id, {
+      include: [{ model: Brand, as: 'brand', attributes: ["name"] }]
+    });
 
     if(product) {
       res.status(200).json(product);

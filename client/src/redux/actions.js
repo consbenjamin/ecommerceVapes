@@ -18,6 +18,11 @@ export const CART_UP = 'CART_UP';
 export const CART_DOWN = 'CART_DOWN';
 
 
+export const FILTER_PRODUCTS_BY_BRAND_SUCCESS = 'FILTER_PRODUCTS_BY_BRAND_SUCCESS';
+export const FILTER_PRODUCTS_BY_BRAND_FAILURE = 'FILTER_PRODUCTS_BY_BRAND_FAILURE';
+
+
+
 
 
 
@@ -193,6 +198,23 @@ export function cartDown(payload){
   }
 };
 
+export function filterByBrand(brandId){
+  return async function(dispatch){
+    try {
+      const response = await axios.get(`http://localhost:3001/products/brands/${brandId}`);
+
+      dispatch({
+        type: FILTER_PRODUCTS_BY_BRAND_SUCCESS,
+        payload: response.data
+      });
+    } catch (error) {
+      dispatch({
+        type: FILTER_PRODUCTS_BY_BRAND_FAILURE,
+        payload: error.message
+      });
+    }
+  }
+};
 
 
 
