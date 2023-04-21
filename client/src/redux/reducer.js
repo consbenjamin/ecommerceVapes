@@ -1,4 +1,4 @@
-import { GET_PRODUCTS, GET_PRODUCTS_BY_NAME, POST_PRODUCTS, EDIT_PRODUCT, GET_PRODUCT_BY_ID, POST_REGISTER_USER, LOGIN_SUCCESS, LOGIN_ERROR, CART_ADD, CART_REMOVE, CART_UP, CART_DOWN, DELETE_PRODUCT_SUCCESS, DELETE_PRODUCT_FAIL, FILTER_PRODUCTS_BY_BRAND_SUCCESS, FILTER_PRODUCTS_BY_BRAND_FAILURE } from "./actions";
+import { GET_PRODUCTS, GET_PRODUCTS_BY_NAME, POST_PRODUCTS, EDIT_PRODUCT, GET_PRODUCT_BY_ID, POST_REGISTER_USER, LOGIN_SUCCESS, LOGIN_ERROR, CART_ADD, CART_REMOVE, CART_UP, CART_DOWN, DELETE_PRODUCT_SUCCESS, DELETE_PRODUCT_FAIL, FILTER_PRODUCTS_BY_BRAND_SUCCESS, FILTER_PRODUCTS_BY_BRAND_FAILURE, FILTER_PRODUCTS_BY_PRICE_FAILURE, FILTER_PRODUCTS_BY_PRICE_SUCCESS, PRODUCTS_SORTED_BY_PRICE } from "./actions";
 
 
 const initialState = () => {
@@ -178,6 +178,27 @@ export default function rootReducer (state = initialState(), action) {
         ...state,
         isLoading: false,
         error: action.payload
+      };
+    }
+    case FILTER_PRODUCTS_BY_PRICE_SUCCESS: {
+      return {
+        ...state,
+        products: action.payload,
+        isLoading: false,
+        error: null
+      };
+    }
+    case FILTER_PRODUCTS_BY_PRICE_FAILURE: {
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload
+      };
+    }
+    case PRODUCTS_SORTED_BY_PRICE: {
+      return {
+        ...state,
+        products: action.payload
       };
     }
     default: 

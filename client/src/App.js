@@ -9,6 +9,7 @@ import ShoppingCart from "./components/cart/ShoppingCart.jsx";
 import Admin from "./components/admin/Admin.jsx";
 import AddProduct from "./components/admin/AddProduct.jsx";
 import CardEdit from "./components/admin/CardEdit.jsx";
+import MyProfile from "./components/account/MyProfile.jsx";
 
 function App() {
   return (
@@ -23,6 +24,8 @@ function App() {
           <Route path='/login' element={<Login/>}/>
 
           <Route path='/register' element={<Register/>}/>
+
+          <Route path='/myprofile' element={<MyProfile/>}/>
 
           <Route path='/cart' element={<ShoppingCart/>}/>
 

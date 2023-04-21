@@ -132,7 +132,7 @@ export default function Register() {
         <div className="absolute bottom-0 z-10 px-8 text-white opacity-100">
           <p className="mb-7 text-sm opacity-70">Vape Club</p>
         </div>
-        <img class="-z-1 absolute top-0 h-full w-full object-cover opacity-90" src={registerImg} alt='imgNotFound'/>
+        <img className="-z-1 absolute top-0 h-full w-full object-cover opacity-90" src={registerImg} alt='imgNotFound'/>
       </div>
       <div className="flex w-full flex-col mt-[120px] md:w-1/2 ">
         <div className="my-auto mx-auto flex flex-col justify-center px-6 pt-8 md:justify-start lg:w-[28rem]"> 

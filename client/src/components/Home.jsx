@@ -9,8 +9,8 @@ export default function Home() {
 	<>
   <div className="bg-gray-100">
     <Carousel/>
-    <div className="max-w-[1450px] mx-auto pt-[50px] w-full ">
-      <div className="flex flex-row ">
+    <div className="max-w-[1450px] mx-auto pt-[48px] w-full ">
+      <div className="flex flex-col lg:flex-row">
         <Filters/>
         <Cards/>
       </div>

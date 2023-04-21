@@ -17,9 +17,14 @@ export const CART_REMOVE = 'CART_REMOVE';
 export const CART_UP = 'CART_UP';
 export const CART_DOWN = 'CART_DOWN';
 
-
+//Filtros
 export const FILTER_PRODUCTS_BY_BRAND_SUCCESS = 'FILTER_PRODUCTS_BY_BRAND_SUCCESS';
 export const FILTER_PRODUCTS_BY_BRAND_FAILURE = 'FILTER_PRODUCTS_BY_BRAND_FAILURE';
+
+export const FILTER_PRODUCTS_BY_PRICE_SUCCESS = 'FILTER_PRODUCTS_BY_PRICE_SUCCES';
+export const FILTER_PRODUCTS_BY_PRICE_FAILURE = 'FILTER_PRODUCTS_BY_PRICE_FAILURE';
+
+export const PRODUCTS_SORTED_BY_PRICE = 'PRODUCTS_SORTED_BY_PRICE';
 
 
 
@@ -201,8 +206,12 @@ export function cartDown(payload){
 export function filterByBrand(brandId){
   return async function(dispatch){
     try {
-      const response = await axios.get(`http://localhost:3001/products/brands/${brandId}`);
-
+      let response;
+      if (brandId === null) {
+        response = await axios.get(`http://localhost:3001/products`);
+      } else {
+        response = await axios.get(`http://localhost:3001/products/brands/${brandId}`);
+      }
       dispatch({
         type: FILTER_PRODUCTS_BY_BRAND_SUCCESS,
         payload: response.data
@@ -215,6 +224,40 @@ export function filterByBrand(brandId){
     }
   }
 };
+
+export function filterByPrice(minPrice, maxPrice){
+  return async function(dispatch){
+    try {
+      const res = await axios.get(`http://localhost:3001/products/filter/price?minPrice=${minPrice}&maxPrice=${maxPrice}`);
+      dispatch({
+        type: FILTER_PRODUCTS_BY_PRICE_SUCCESS,
+        payload: res.data
+      });
+    } catch (error) {
+      console.error(error);
+      dispatch({
+        type: FILTER_PRODUCTS_BY_PRICE_FAILURE,
+        payload: error.message
+      });
+    }
+  }
+};
+
+export function sortByPrice(order){
+  return async function(dispatch){
+    try {
+      let response = await axios.get(`http://localhost:3001/products/filter/sort-by-price?order=${order}`);
+      dispatch({
+        type: PRODUCTS_SORTED_BY_PRICE,
+        payload: response.data
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  }
+};
+
+
 
 
 
