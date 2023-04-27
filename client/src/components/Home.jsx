@@ -2,6 +2,7 @@ import React from "react";
 import Cards from "./Cards";
 import Carousel from "./Carousel";
 import Filters from "./Filters";
+import Footer from "./Footer";
 
 export default function Home() {
 
@@ -16,6 +17,7 @@ export default function Home() {
       </div>
     </div>
   </div>
+  <Footer/>
   </>
   )
 };

@@ -57,28 +57,7 @@ export default function Admin() {
               </div>
             </li>
           </ul>
-          <div
-            className="flex flex-col sm:flex-row justify-center space-y-2 sm:space-y-0 sm:justify-between w-full px-4 mb-2 mt-4 items-center ">
-            <div className="flex bg-gray-100 w-full sm:w-2/5 items-center rounded-lg">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mx-2" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
-                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
-              <input
-              className="w-full bg-gray-100 outline-none border-transparent focus:border-transparent focus:ring-0 rounded-lg text-sm"
-              type="text" placeholder="Search a product..." />
-            </div>
-            <div className="flex-row space-x-2 items-center ">
-              <select className="border border-gray-300 rounded-md text-gray-600 px-2 pl-2 pr-8 bg-white hover:border-gray-400 focus:outline-none text-xs focus:ring-0">
-                <option>Filter by</option>
-              </select>
-              <select className="border border-gray-300 rounded-md text-gray-600 px-2 pl-2 pr-8 bg-white hover:border-gray-400 focus:outline-none text-xs
-                focus:ring-0">
-                <option>Sort by</option>
-              </select>
-            </div>
-          </div>
+          
           <div className="mt-6 overflow-x-auto bg-white">
             <table className="w-full table-auto">
               <thead className="">
@@ -93,9 +72,12 @@ export default function Admin() {
                 </tr>
               </thead>
               {/* PRODUCTOS */}
-              {products.map((el) => {
+              {
+              products.length ?  
+              products.map((el) => {
                 return (
                   <CardAdmin
+                  
                     key={el.id}
                     name={el.name}
                     price={el.price}
@@ -103,10 +85,10 @@ export default function Admin() {
                     id={el.id}
                   />
                 )
-              })}
-              {/* FIN PRODUCTOS */}
+              }):<h1>Loading...</h1>}
             </table>
           </div>
+          {/* FIN PRODUCTOS */}
           <div className="flex flex-col items-center w-full px-4 py-4 text-sm text-gray-500 justify-center mx-auto">
             <div className="flex items-center justify-between space-x-2">
               <a href="#" className="hover:text-gray-600">Previous</a>

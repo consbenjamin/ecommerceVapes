@@ -84,7 +84,7 @@ export default function Navbar() {
                 <li className='text-xl py-4 pl-1 flex'><Link className='flex' to= {'/'}><AiFillHome size={25} className='mr-4'/>Home</Link></li>
                 <li className='text-xl py-4 pl-1 flex'><MdFavorite size={25} className='mr-4'/>Favorites</li>
                 <li className='text-xl py-4 pl-1 flex'><FaWallet size={25} className='mr-4'/>Wallet</li>
-                <li className='text-xl py-4 pl-1 flex'><MdHelp size={25} className='mr-4'/>Help</li>
+                <li className='text-xl py-4 pl-1 flex'><Link className='flex' to= {'/faq'}><MdHelp size={25} className='mr-4'/>FAQ</Link></li>
                 <li className='text-xl py-4 pl-1 flex'><AiFillTag size={25} className='mr-4'/>Promotions</li>
                 {adminPrivileges === true ?
                 <li className='text-xl py-4 pl-1 flex'><Link className='flex' to= {'/admin'}><MdAdminPanelSettings size={28} className='mr-4'/>Admin Panel</Link></li>

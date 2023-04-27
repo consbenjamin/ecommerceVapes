@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { filterByBrand, filterByPrice, sortByPrice } from '../redux/actions';
 import { MdFilterAltOff } from "react-icons/md";
 import { AiOutlineMenu } from 'react-icons/ai';
@@ -15,7 +15,7 @@ export default function Filters() {
   const [maxPrice, setMaxPrice] = useState(10000);
   const [order, setOrder] = useState('asc');
 
-  const filtersState = useSelector((state) => state.products);
+  // const filtersState = useSelector((state) => state.products);
 
 
 
@@ -91,6 +91,7 @@ export default function Filters() {
                 <li className={`${changeFilterColor('1')} my-4`} onClick={() => handleBrandFilter('1')}>Ignite</li>
                 <li className={`${changeFilterColor('2')} my-4`} onClick={() => handleBrandFilter('2')}>Elfbar</li>
               </ul>
+              <button className='pb-[16px] mx-4' onClick={handleClearFilters}><MdFilterAltOff size={18}/></button>
             </div>
           )}
       <aside className='hidden lg:block'>
@@ -137,7 +138,7 @@ export default function Filters() {
           </div>
           <div className='flex my-8 ml-2 justify-between items-center'>
             <span className='font-semibold tracking-wide flex'><h3 className='text-slate-500'>Precio:</h3>${minPrice} - ${maxPrice}</span>
-            <button onClick={handlePriceFilter} className='bg-black break-all text-white font-semibold p-2 w-[25%] rounded-md hover:bg-gray-800 mx-4 '>FILTRAR</button>
+            <button onClick={handlePriceFilter} className='bg-black break-all text-white font-semibold p-2 w-[25%] rounded-md hover:bg-gray-800 mx-4 lg:text-xs lg:break-normal xl:text-base '>FILTRAR</button>
           </div>
           <div className='flex-col mt-2 border-t-2 border-b-2'>
             <h3 className='text-black font-semibold text-base mt-6 pl-2'>ORDENAR POR</h3>

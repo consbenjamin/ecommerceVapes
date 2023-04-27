@@ -10,6 +10,7 @@ import Admin from "./components/admin/Admin.jsx";
 import AddProduct from "./components/admin/AddProduct.jsx";
 import CardEdit from "./components/admin/CardEdit.jsx";
 import MyProfile from "./components/account/MyProfile.jsx";
+import Faq from "./components/Faq.jsx";
 
 function App() {
   return (
@@ -17,7 +18,9 @@ function App() {
       <Navbar/>
         <Routes>
 
-          <Route path='/' element={<Home/>}/>  
+          <Route path='/' element={<Home/>}/>
+
+          <Route path='/faq' element={<Faq/>}/>   
 
           <Route path='/detail/:id' element={<Detail/>}/>
 
