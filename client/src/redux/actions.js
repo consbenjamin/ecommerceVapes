@@ -7,10 +7,12 @@ export const DELETE_PRODUCT_SUCCESS = 'DELETE_PRODUCT_SUCCESS';
 export const DELETE_PRODUCT_FAIL = 'DELETE_PRODUCT_FAIL';
 export const EDIT_PRODUCT = 'EDIT_PRODUCT';
 export const GET_PRODUCT_BY_ID = 'GET_PRODUCT_BY_ID';
-export const POST_REGISTER_USER = 'POST_REGISTER_USER';
+
 
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_ERROR = 'LOGIN_ERROR';
+export const POST_REGISTER_USER = 'POST_REGISTER_USER';
+export const EDIT_USER_DATA =  'EDIT_USER_DATA';
 
 export const CART_ADD = 'CART_ADD';
 export const CART_REMOVE = 'CART_REMOVE';
@@ -151,6 +153,22 @@ export function loginUser(email, password) {
     }
   }
 };
+
+export function editUserData(id, data) {
+  return async function (dispatch) {
+    try {
+      let json = await axios.put(`http://localhost:3001/account/editData/${id}`, data);
+      return dispatch({
+        type: EDIT_USER_DATA,
+        payload: json.data 
+      });
+    } catch (error) {
+      console.log(error)
+    }
+  }
+};
+
+
 
 export function cartAdd(payload){
   let id = localStorage.getItem('userId')

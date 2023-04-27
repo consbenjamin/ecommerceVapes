@@ -89,16 +89,6 @@ export default function Admin() {
             </table>
           </div>
           {/* FIN PRODUCTOS */}
-          <div className="flex flex-col items-center w-full px-4 py-4 text-sm text-gray-500 justify-center mx-auto">
-            <div className="flex items-center justify-between space-x-2">
-              <a href="#" className="hover:text-gray-600">Previous</a>
-              <div className="flex flex-row space-x-1">
-                <div className="flex px-2 py-px text-white bg-blue-400 border border-blue-400">1</div>
-                <div className="flex px-2 py-px border border-blue-400 hover:bg-blue-400 hover:text-white">2</div>
-              </div>
-              <a href="#" className="hover:text-gray-600">Next</a>
-            </div>
-          </div>
         </div>
       </div>
     )

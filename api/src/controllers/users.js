@@ -66,6 +66,38 @@ const findUserById = async (req, res) => {
 
 ///////////////////////////////////////////////////////////////
 
+const editUser = async (req, res) => {
+  const { id } = req.params;
+
+  if (!id || isNaN(id)) {
+    return res.status(400).json({ message: 'ID de usuario no válido' });
+  }
+  
+  try {
+    const user = await User.findByPk(id);
+    if (!user) {
+      return res.status(404).json({ message: 'Usuario no encontrado' });
+    }
+
+    const { firstName, lastName, email, password } = req.body;
+
+    const updatedUser = await user.update({
+      firstName: firstName || user.firstName,
+      lastName: lastName || user.lastName,
+      email: email || user.email,
+      password: password ? await bcrypt.hash(password, 10) : user.password,
+    });
+
+    return res.status(200).json({ message: 'Usuario actualizado', user: updatedUser });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Error actualizando usuario' });
+  }
+};
+
+///////////////////////////////////////////////////////////////
+
+
 const getUsers = async (req, res) => {
   try {
     const users = await User.findAll({ attributes: { exclude: ['password'] } });
@@ -128,4 +160,4 @@ const getCart = async (req, res) => {
 };
 
 
-module.exports = { postRegister, postLogin, findUserById, getUsers, addToCart, getCart };
+module.exports = { postRegister, postLogin, findUserById, editUser, getUsers, addToCart, getCart };

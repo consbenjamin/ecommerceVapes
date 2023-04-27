@@ -4,7 +4,7 @@ import Footer from './Footer';
 export default function Faq() {
   return (
     <div className=''>
-      <div className="max-w-screen-xl mx-auto px-5 min-h-sceen my-[110px]">
+      <div className=" px-5 min-h-sceen py-[86px] bg-gray-100">
         <div className="flex flex-col items-center">
           <h2 className="font-bold text-5xl mt-5 tracking-tight">
             FAQ

@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { postRegister, postLogin, findUserById, getUsers, addToCart, getCart } = require('../controllers/users');
+const { postRegister, postLogin, findUserById, getUsers, addToCart, getCart, editUser } = require('../controllers/users');
 const { createAdmin, getAdminUsers, deleteUser, } = require('../controllers/admin');
 const { verifyToken, isAdmin } = require('../middlewares/jwtMiddleware');
 const router = Router();
@@ -11,6 +11,8 @@ router.post('/login', postLogin);
 router.get('/users', getUsers,);
 
 router.get('/users/:id', findUserById);
+
+router.put('/editData/:id', editUser);
 
 router.get('/users/:userId/cart', getCart);
 

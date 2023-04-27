@@ -28,7 +28,7 @@ function App() {
 
           <Route path='/register' element={<Register/>}/>
 
-          <Route path='/myprofile' element={<MyProfile/>}/>
+          <Route path='/editData/:id' element={<MyProfile/>}/>
 
           <Route path='/cart' element={<ShoppingCart/>}/>
 

@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import CardCarrito from './CardCarrito';
 import {cartRemove, cartUp, cartDown} from '../../redux/actions';
 import { TbTrash } from "react-icons/tb";
+import Footer from '../Footer';
 
 
 export default function ShoppingCart() {
@@ -14,6 +15,7 @@ export default function ShoppingCart() {
   let price = carro.cart.map(e=>e.price*e.quantity).reduce((a,current)=>a+current,0);
 
   return (
+    <>
     <section className={`py-12 sm:py-16 lg:py-20 ${carro.cart.length >= 3 ? "bg-gray-100 " : "h-screen bg-gray-100 "}`}>
       <div className="mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-center mt-[45px]">
@@ -66,6 +68,8 @@ export default function ShoppingCart() {
           </div>
       </div>
     </section>
+    <Footer/>
+    </>
   )
 };
 

@@ -42,9 +42,11 @@ export default function Navbar() {
         <button onClick={() => setOpen(true)}>
           <AiOutlineMenu size={30} className='text-black'/>
         </button>
-        <h1 className='text-2xl sm:text-3xl lg:text-4xl font-bold text-black'> 
-            Vape<span className='font-normal text-black'>Club</span>
-        </h1>
+        <Link to={'/'}>
+          <h1 className='text-2xl sm:text-3xl lg:text-4xl font-bold text-black'> 
+              Vape<span className='font-normal text-black'>Club</span>
+          </h1>
+        </Link>
         <SearchBar/>
         {/* Icons */}
         {!token ? 
@@ -62,7 +64,7 @@ export default function Navbar() {
             <div className="dropdown dropdown-hover dropdown-end">
               <div className='flex items-center'><span className='font-bold text-base mr-[5px]'>{loggedInUser}</span><BsFillPersonFill size={27} className='text-black'/></div>
               <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-gray-200 rounded-box w-52">
-                <li><Link className='font-medium' to={'/myprofile'}>My Profile</Link></li>
+                <li><Link className='font-medium' to={'/editData/:id'}>My Profile</Link></li>
                 <li><button className='font-medium' onClick={handleLoginOut}>Log Out</button></li>
               </ul> 
             </div>
@@ -83,9 +85,7 @@ export default function Navbar() {
             <ul className='flex flex-col p-4 text-[#18171c]'>
                 <li className='text-xl py-4 pl-1 flex'><Link className='flex' to= {'/'}><AiFillHome size={25} className='mr-4'/>Home</Link></li>
                 <li className='text-xl py-4 pl-1 flex'><MdFavorite size={25} className='mr-4'/>Favorites</li>
-                <li className='text-xl py-4 pl-1 flex'><FaWallet size={25} className='mr-4'/>Wallet</li>
                 <li className='text-xl py-4 pl-1 flex'><Link className='flex' to= {'/faq'}><MdHelp size={25} className='mr-4'/>FAQ</Link></li>
-                <li className='text-xl py-4 pl-1 flex'><AiFillTag size={25} className='mr-4'/>Promotions</li>
                 {adminPrivileges === true ?
                 <li className='text-xl py-4 pl-1 flex'><Link className='flex' to= {'/admin'}><MdAdminPanelSettings size={28} className='mr-4'/>Admin Panel</Link></li>
                   : null}
