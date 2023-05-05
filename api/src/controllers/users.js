@@ -111,41 +111,167 @@ const getUsers = async (req, res) => {
 
 ///////////////////////////////////////////////////////////////
 
-const addToCart = async (req, res) => {
-  const { userId } = req.params;
-  const { productId, quantity } = req.body;
-
+const postProductToCart = async (req, res) => {
   try {
-    const user = await User.findByPk(userId);
-    const product = await Product.findByPk(productId);
-
-    if (!user || !product) {
-      return res.status(404).send('User or product not found');
-    }
-
-    const [cart, created] = await Cart.findOrCreate({
-      where: { userId },
-      include: [Product],
+    const { userId, products } = req.body;
+    // Buscamos todos los productos a agregar al carrito
+    const productIds = products.map((product) => product.id);
+    const foundProducts = await Product.findAll({
+      where: {
+        id: productIds,
+      },
     });
 
-    await cart.addProduct(product, { through: { quantity } });
+    // Recorremos todos los productos a agregar al carrito
+    for (const product of products) {
+      const foundProduct = foundProducts.find(
+        (p) => p.id === product.id
+      );
 
-    return res.status(201).send('Product added to cart');
+      if (!foundProduct) {
+        return res
+          .status(404)
+          .json({ message: `Product with id ${product.id} not found` });
+      }
+
+      const existingCartItem = await Cart.findOne({
+        where: {
+          userId: userId,
+          productId: foundProduct.id,
+        },
+      });
+
+      if (existingCartItem) {
+        // Si ya existe un objeto de carrito con el mismo productId, simplemente aumentamos la cantidad
+        existingCartItem.quantity += product.quantity;
+        existingCartItem.total += foundProduct.price * product.quantity;
+        existingCartItem.isUpdate = true;
+        await existingCartItem.save();
+      } else {
+        // Si no existe un objeto de carrito con el mismo productId, creamos uno nuevo
+        const cartItem = {
+          quantity: product.quantity,
+          price: foundProduct.price,
+          image: foundProduct.img,
+          total: foundProduct.price * product.quantity,
+          name: foundProduct.name,
+          flavor: foundProduct.flavor,
+          userId,
+          productId: foundProduct.id,
+        };
+
+        await Cart.create(cartItem);
+      }
+    }
+
+    // Devolvemos los productos agregados al carrito junto con sus detalles
+    const cartItemsWithProducts = await Cart.findAll({
+      where: { userId: userId },
+      include: {
+        model: Product,
+        attributes: ["name", "description", "price", "img"],
+      },
+    });
+
+    return res
+      .status(200)
+      .json({ message: "Products added to cart successfully", cartItems: cartItemsWithProducts, });
   } catch (error) {
-    console.log(error);
-    return res.status(500).send('Server error');
+    console.error(error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+
+///////////////////////////////////////////////////////////////
+
+const updateCartQuantity = async (req, res) => {
+  try {
+    const { userId, items } = req.body;
+
+    const user = await User.findByPk(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Iteramos sobre los items y actualizamos el carrito para cada producto
+    for (const item of items) {
+      const { productId, quantity } = item;
+
+      const cartItem = await Cart.findOne({
+        where: {
+          userId: userId,
+          productId: productId
+        }
+      });
+
+      if (!cartItem) {
+        return res.status(404).json({ message: 'Product not found in cart' });
+      }
+
+      cartItem.quantity = quantity;
+      cartItem.total = quantity * cartItem.price;
+
+      await cartItem.save();
+    }
+
+    // Recuperamos el carrito actualizado y lo devolvemos junto al mensaje de éxito
+    const updatedCart = await Cart.findAll({
+      where: {
+        userId: userId
+      },
+      include: Product
+    });
+
+    return res.status(200).json({message:'Cart updated successfully', cart: updatedCart });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Internal server error' });
   }
 };
 
 ///////////////////////////////////////////////////////////////
 
-const getCart = async (req, res) => {
+const removeFromCart = async (req, res) => {
+  try {
+    const { productId } = req.body;
+    const userId = req.params.userId;
+
+    // Buscamos el objeto de carrito a eliminar
+    const cartItem = await Cart.findOne({
+      where: {
+        userId: userId,
+        productId: productId
+      }
+    });
+
+    if (!cartItem) {
+      return res.status(404).json({ message: 'Cart item not found' });
+    }
+
+    // Eliminamos el objeto de carrito de la base de datos
+    await cartItem.destroy();
+
+    return res.status(200).json({ message: 'Product removed from cart successfully' });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+///////////////////////////////////////////////////////////////
+
+const getCartProducts = async (req, res) => {
   const { userId } = req.params;
 
   try {
-    const cart = await Cart.findOne({
+    const cart = await Cart.findAll({
       where: { userId },
-      include: [{ model: Product }],
+      include: {
+        model: Product,
+        attributes: ['name', 'flavor']
+      }
     });
 
     if (!cart) {
@@ -160,4 +286,50 @@ const getCart = async (req, res) => {
 };
 
 
-module.exports = { postRegister, postLogin, findUserById, editUser, getUsers, addToCart, getCart };
+
+
+module.exports = { postRegister, postLogin, findUserById, editUser, getUsers, postProductToCart, getCartProducts, removeFromCart, updateCartQuantity };
+
+
+
+
+
+
+
+
+
+// const postProductToCart = async (req, res) => {
+//   try {
+//     const { userId, productId, quantity } = req.body;
+
+//     // Buscamos el producto a agregar al carrito
+//     const product = await Product.findByPk(productId);
+
+//     if (!product) {
+//       return res.status(404).json({ message: 'Product not found' });
+//     }
+
+//     // Creamos el objeto del carrito
+//     const cart = {
+//       quantity,
+//       price: product.price,
+//       image: product.img,
+//       total: product.price * quantity,
+//       userId,
+//       productId
+//     };
+
+//     // Buscamos el carrito del usuario
+//     const [userCart] = await Cart.findOrCreate({
+//       where: { userId },
+//     });
+
+//     // Actualizamos el carrito del usuario en la base de datos
+//     await Cart.create(cart);
+
+//     return res.status(200).json({ message: 'Product added to cart successfully' , quantity: quantity});
+//   } catch (error) {
+//     console.error(error);
+//     return res.status(500).json({ message: 'Internal server error' });
+//   }
+// };

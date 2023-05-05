@@ -1,7 +1,7 @@
-import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import CardCarrito from './CardCarrito';
-import {cartRemove, cartUp, cartDown} from '../../redux/actions';
+import {cartRemove, postToCart} from '../../redux/actions';
 import { TbTrash } from "react-icons/tb";
 import Footer from '../Footer';
 
@@ -9,14 +9,45 @@ import Footer from '../Footer';
 export default function ShoppingCart() {
 
   const dispatch = useDispatch();
-  const carro = useSelector((state)=> state);
-  const cart = localStorage.getItem('cart')
+  const [items, setItems] = useState([]);
 
-  let price = carro.cart.map(e=>e.price*e.quantity).reduce((a,current)=>a+current,0);
+  useEffect(() => {
+    const items = JSON.parse(localStorage.getItem('cart'));
+    if (items) {
+      setItems(items);
+    }
+  }, []);
+
+  console.log(items, "items");
+  const userId = localStorage.getItem('userId');
+
+  let price = 0;
+  if (items && items.length > 0) {
+  price = items.map(e => e.price * e.quantity).reduce((a, current) => a + current, 0);
+  }
+
+  const cartNumber = items && items.length > 0 ? items.map(e => e.quantity).reduce((a, current) => a + current, 0) : 0;
+  localStorage.setItem('cartNumber', cartNumber);
+
+  const handleRemove = (id) => {
+    const filteredItems = items.filter(item => item.id !== id);
+    dispatch(cartRemove(id))
+    setItems(filteredItems);
+  };
+
+  const products = items
+  console.log(products)
+  
+
+  const handlePostToCart = () => {
+    dispatch(postToCart(userId, products));
+  }
+
+
 
   return (
     <>
-    <section className={`py-12 sm:py-16 lg:py-20 ${carro.cart.length >= 3 ? "bg-gray-100 " : "h-screen bg-gray-100 "}`}>
+    <section className={`py-12 sm:py-16 lg:py-20 ${items.length >= 3 ? "bg-gray-100 " : "h-screen bg-gray-100 "}`}>
       <div className="mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-center mt-[45px]">
           <h1 className="text-3xl font-semibold text-gray-900">Your Cart</h1>
@@ -25,55 +56,75 @@ export default function ShoppingCart() {
         <div className="mx-auto mt-8 max-w-2xl md:mt-12">
           <div className="bg-white shadow">
             <div className="px-4 py-6 sm:px-8 sm:py-10">
-            {carro.cart.map((el, id) => {return (
-              <div key={id}>
+              {items.length ? (
+                items.map((el) => {
+                  return (
+                    <div key={el.id}>
 
-                <CardCarrito product={el} key={id} />
-
-                <div class="sm:order-1 mb-4">
-                  <div class="mx-auto flex h-8 items-stretch text-gray-600">
-                    <button onClick={()=>dispatch(cartDown(id))} className="flex items-center justify-center rounded-l-lg bg-gray-200 px-4 transition hover:bg-black hover:text-white">-</button>
-                    <button onClick={()=>dispatch(cartUp(id))} className="flex items-center justify-center rounded-r-lg bg-gray-200 px-4 transition hover:bg-black hover:text-white">+</button>
-                  </div>
-                </div>
-
-                <div className=' bg-[#971b1b] hover:bg-[#d61313] p-[8px] rounded-lg flex justify-center w-[8%]'>
-                  <button className=' text-center text-[#fff]' onClick={()=>dispatch(cartRemove(el.id))}><TbTrash className=' text-2xl'/></button>
-                </div>
-
-              </div>
-              )})
-            }
+                      <CardCarrito product={el} />
+                      
+                      <div className=' bg-[#971b1b] hover:bg-[#d61313] p-[8px] rounded-lg flex justify-center w-[8%]'>
+                        <button  onClick={() => handleRemove(el.id)} className=' text-center text-[#fff]'><TbTrash className='text-2xl'/></button>
+                      </div>
+                    </div>
+                  )
+                })
+              ) : (
+                <p>Carrito vacío</p>
+              )}
               <div className="mt-6 border-t flex items-center justify-between">
                 <p className="text-sm font-medium text-gray-900">Total</p>
-                <p className="text-2xl font-semibold text-gray-900"><span class="text-xs font-normal text-gray-400">ARS</span> {price}</p>
+                <p className="text-2xl font-semibold text-gray-900"><span className="text-xs font-normal text-gray-400">ARS</span>{price}</p>
               </div>
 
 
               <div className="mt-6 text-center">
-                {carro.cart.length !== 0 ? <button type="button" className="group inline-flex w-full items-center justify-center rounded-md bg-gray-900 px-6 py-4 text-lg font-semibold text-white transition-all duration-200 ease-in-out focus:shadow hover:bg-gray-800">
-                  Checkout
-                  <svg xmlns="http://www.w3.org/2000/svg" class="group-hover:ml-8 ml-4 h-6 w-6 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                  </svg>
-                </button> : <button type="button" disabled class='cursor-not-allowed inline-flex group w-full items-center justify-center rounded-md bg-gray-900 px-6 py-4 text-lg font-semibold text-white transition-all duration-200 ease-in-out focus:shadow hover:bg-gray-400'>
-                  Checkout
-                  <svg xmlns="http://www.w3.org/2000/svg" className=" ml-4 h-6 w-6 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                  </svg>
-                </button>}
+                {items.length !== 0 ? 
+                  <button onClick={() => handlePostToCart()} type="button" className="group inline-flex w-full items-center justify-center rounded-md bg-gray-900 px-6 py-4 text-lg font-semibold text-white transition-all duration-200 ease-in-out focus:shadow hover:bg-gray-800">
+                    Checkout
+                    <svg xmlns="http://www.w3.org/2000/svg" className="group-hover:ml-8 ml-4 h-6 w-6 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                    </svg>
+                  </button> : 
+                  <button type="button" disabled className='cursor-not-allowed inline-flex group w-full items-center justify-center rounded-md bg-gray-900 px-6 py-4 text-lg font-semibold text-white transition-all duration-200 ease-in-out focus:shadow hover:bg-gray-400'>
+                    Checkout
+                    <svg xmlns="http://www.w3.org/2000/svg" className=" ml-4 h-6 w-6 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                    </svg>
+                  </button>
+                }
               </div>
             </div>
             </div>
           </div>
       </div>
     </section>
-    <Footer/>
+    {/* <Footer/> */}
     </>
   )
 };
 
+// const handleIncrement = (item) => {
+//   const newItem = {  ...item, quantity: item.quantity + 1 };
+//   dispatch(updateCart(userId, [newItem])).then(() => {
+//     dispatch(getCartProducts(userId));
+//   });
+// };
 
+// const handleDecrement = (item) => {
+//   if (item.quantity > 1) {
+//     const newItem = {  ...item, quantity: item.quantity - 1 };
+//     dispatch(updateCart(userId, [newItem])).then(() => {
+//       dispatch(getCartProducts(userId));
+//     });
+//   }
+// };
+
+// const handleRemove = (productId) => {
+//   dispatch(cartRemove(userId, productId.productId)).then(() => {
+//     dispatch(getCartProducts(userId));
+//   });
+// };
 
 
 

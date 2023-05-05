@@ -1,9 +1,8 @@
 import React from 'react';
 
-
 export default function CardCarrito({product}) {
-
   return (
+  
     <div className="">
       <ul className=" my-[6px]">
         <li className="flex flex-col space-y-3 py-6 text-left sm:flex-row sm:space-x-5 sm:space-y-0">
@@ -16,11 +15,11 @@ export default function CardCarrito({product}) {
               <div className="pr-8 sm:pr-5">
                 <p className="text-base font-semibold text-gray-900">{product.name}</p>
                 <p className="mx-0 mt-1 mb-0 text-sm text-gray-400 capitalize">{product.flavor}</p>
-                <p classNameName='mx-0 text-sm text-gray-900'>x {product.quantity}</p>
+                <p className='mx-0 text-sm text-gray-900'>x {product.quantity}</p>
               </div>
 
               <div className="mt-4 flex items-end justify-between sm:mt-0 sm:items-start sm:justify-end">
-                <p className="shrink-0 w-20 text-base font-semibold text-gray-900 sm:order-2 sm:ml-8 sm:text-right">${product.price}ARS</p>
+                <p className="shrink-0 w-20 text-base font-semibold text-gray-900 sm:order-2 sm:ml-8 sm:text-right">${product.price * product.quantity}ARS</p>
               </div>
             </div>
           </div>

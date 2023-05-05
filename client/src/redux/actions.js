@@ -14,10 +14,12 @@ export const LOGIN_ERROR = 'LOGIN_ERROR';
 export const POST_REGISTER_USER = 'POST_REGISTER_USER';
 export const EDIT_USER_DATA =  'EDIT_USER_DATA';
 
-export const CART_ADD = 'CART_ADD';
-export const CART_REMOVE = 'CART_REMOVE';
+//Cart
+export const CART_ADD = 'CART_ADD'; 
+export const CART_REMOVE = 'CART_REMOVE'; 
 export const CART_UP = 'CART_UP';
 export const CART_DOWN = 'CART_DOWN';
+export const POST_TO_CART = 'POST_TO_CART';
 
 //Filtros
 export const FILTER_PRODUCTS_BY_BRAND_SUCCESS = 'FILTER_PRODUCTS_BY_BRAND_SUCCESS';
@@ -168,58 +170,43 @@ export function editUserData(id, data) {
   }
 };
 
-
-
-export function cartAdd(payload){
-  let id = localStorage.getItem('userId')
-  if(id) {
-      return async function(dispatch){
-          dispatch({
-              type: CART_ADD,
-              payload
-          })
-      console.log(payload);
-      await axios.put(`http://localhost:3001/login/updateCart/${id}`, payload)
+export function postToCart(userId, products) {
+    return async function (dispatch) {
+      try {
+        let json = await axios.post(`http://localhost:3001/account/users/cart`, {userId, products});
+        return dispatch({
+          type: POST_TO_CART,
+          payload: json.data
+        })
+      } catch (error) {
+        console.log(error)
       }
-  } else { 
-    const error = new Error("Tienes que tener tu sesión iniciada para agregar cosas al carrito");
-    return function (dispatch) {
-      dispatch({
+    }
+};
+
+export function cartAdd(payload) {
+  return async function (dispatch) {
+    try {
+      return dispatch({
         type: CART_ADD,
         payload
-      });
-      console.error(error);
-      throw error;
-    };
-  } 
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
 };
+
 
 export function cartRemove(payload){
   return async function(dispatch){
-      dispatch({
-          type: CART_REMOVE,
-          payload
+      return dispatch({
+        type: CART_REMOVE,
+        payload
       })
   }
 };
 
-export function cartUp(payload){
-  return async function(dispatch){
-      dispatch({
-          type: CART_UP,
-          payload
-      })
-  }
-};
-
-export function cartDown(payload){
-  return async function(dispatch){
-      dispatch({
-          type: CART_DOWN,
-          payload
-      })
-  }
-};
 
 export function filterByBrand(brandId){
   return async function(dispatch){
@@ -281,3 +268,59 @@ export function sortByPrice(order){
 
 
 
+// export function updateCart(userId, items) {
+//   return async function (dispatch) {
+//     try {
+//       let json = await axios.put(`http://localhost:3001/account/cart/quantity`, { userId, items });
+//       return dispatch({
+//         type: UPDATE_CART,
+//         payload: json.data
+//       })
+//     } catch (error) {
+//       console.log(error)
+//     }
+//   }
+// };
+
+// export function cartRemove(userId, productId){
+//   return async function(dispatch){
+//     try {
+//       let json = await axios.delete(`http://localhost:3001/account/users/${userId}/removeCart`, { data: { productId } });
+//       return dispatch({
+//         type: CART_REMOVE,
+//         payload: json.data
+//       })
+//     } catch (error) {
+//       console.log(error)
+//     } 
+//   }
+// };
+
+// export function getCartProducts(userId) {
+//   return async function (dispatch) {
+//     try {
+//       let json = await axios.get(`http://localhost:3001/account/cart/${userId}`);
+//       return dispatch({
+//         type: GET_CART_PRODUCTS,
+//         payload: json.data
+//       });
+//     } catch (error) {
+//       console.log(error)
+//     }
+//   }
+// };
+
+
+// export function cartAdd(userId, productId, quantity) {
+//   return async function (dispatch) {
+//     try {
+//       let json = await axios.post(`http://localhost:3001/account/users/cart`, {userId, productId, quantity});
+//       return dispatch({
+//         type: CART_ADD,
+//         payload: json.data
+//       })
+//     } catch (error) {
+//       console.log(error)
+//     }
+//   }
+// };

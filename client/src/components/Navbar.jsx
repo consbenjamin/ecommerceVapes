@@ -1,8 +1,6 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
-import { AiFillTag, AiOutlineClose, AiOutlineMenu, AiFillHome } from 'react-icons/ai';
+import React, { useState, useEffect } from 'react';
+import { AiOutlineClose, AiOutlineMenu, AiFillHome } from 'react-icons/ai';
 import { BsFillCartFill, BsFillPersonFill } from 'react-icons/bs';
-import { FaWallet } from 'react-icons/fa';
 import { MdAdminPanelSettings } from "react-icons/md";
 import { MdFavorite, MdHelp } from 'react-icons/md';
 import { Link } from 'react-router-dom';
@@ -12,10 +10,14 @@ import SearchBar from './SearchBar';
 export default function Navbar() {
 
   const [open, setOpen] = useState(false);
-
-  const cartItems = useSelector(state => state.numberCart);
+  const [cartItems, setCartItems ] = useState(0); 
 
   var adminPrivileges= JSON.parse(localStorage.getItem("adminPrivileges"));
+
+  useEffect(() => {
+    const newCartItems = localStorage.getItem('cartNumber');
+    setCartItems(newCartItems);
+  }, [cartItems]);
   
 
   const loggedInUser = localStorage.getItem("firstName");
@@ -24,8 +26,9 @@ export default function Navbar() {
   const handleLoginOut = (e) => {
     e.preventDefault();
     localStorage.removeItem("userId");
-    localStorage.removeItem("cart");
     localStorage.removeItem("email");
+    localStorage.removeItem("cart");
+    localStorage.removeItem("cartNumber");
     localStorage.removeItem("firstName");
     localStorage.removeItem("token");
     localStorage.removeItem("image");
@@ -64,7 +67,7 @@ export default function Navbar() {
             <div className="dropdown dropdown-hover dropdown-end">
               <div className='flex items-center'><span className='font-bold text-base mr-[5px]'>{loggedInUser}</span><BsFillPersonFill size={27} className='text-black'/></div>
               <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-gray-200 rounded-box w-52">
-                <li><Link className='font-medium' to={'/editData/:id'}>My Profile</Link></li>
+                <li><Link className='font-medium' to={'/editData/:id'}>Edit Profile</Link></li>
                 <li><button className='font-medium' onClick={handleLoginOut}>Log Out</button></li>
               </ul> 
             </div>
