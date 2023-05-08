@@ -14,7 +14,6 @@ export default function Carousel() {
     {
       url: 'https://images.unsplash.com/photo-1611898674096-762e2462f2b3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80',
     },
-
     {
       url: 'https://images.unsplash.com/photo-1624981368944-e8fb7899cc3f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80',
     },

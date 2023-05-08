@@ -286,50 +286,5 @@ const getCartProducts = async (req, res) => {
 };
 
 
-
-
 module.exports = { postRegister, postLogin, findUserById, editUser, getUsers, postProductToCart, getCartProducts, removeFromCart, updateCartQuantity };
 
-
-
-
-
-
-
-
-
-// const postProductToCart = async (req, res) => {
-//   try {
-//     const { userId, productId, quantity } = req.body;
-
-//     // Buscamos el producto a agregar al carrito
-//     const product = await Product.findByPk(productId);
-
-//     if (!product) {
-//       return res.status(404).json({ message: 'Product not found' });
-//     }
-
-//     // Creamos el objeto del carrito
-//     const cart = {
-//       quantity,
-//       price: product.price,
-//       image: product.img,
-//       total: product.price * quantity,
-//       userId,
-//       productId
-//     };
-
-//     // Buscamos el carrito del usuario
-//     const [userCart] = await Cart.findOrCreate({
-//       where: { userId },
-//     });
-
-//     // Actualizamos el carrito del usuario en la base de datos
-//     await Cart.create(cart);
-
-//     return res.status(200).json({ message: 'Product added to cart successfully' , quantity: quantity});
-//   } catch (error) {
-//     console.error(error);
-//     return res.status(500).json({ message: 'Internal server error' });
-//   }
-// };

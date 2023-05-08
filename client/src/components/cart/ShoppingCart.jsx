@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
+import { useDispatch } from 'react-redux';
 import CardCarrito from './CardCarrito';
 import {cartRemove, postToCart} from '../../redux/actions';
 import { TbTrash } from "react-icons/tb";
+import Swal from 'sweetalert2';
 import Footer from '../Footer';
 
 
@@ -36,14 +38,28 @@ export default function ShoppingCart() {
   };
 
   const products = items
-  console.log(products)
-  
 
   const handlePostToCart = () => {
-    dispatch(postToCart(userId, products));
-  }
-
-
+    dispatch(postToCart(userId, products))
+        .then(() => {
+            sessionStorage.setItem('purchase', JSON.stringify({ userId, products }));
+            const purchaseData = JSON.parse(sessionStorage.getItem('purchase'));
+            Swal.fire({
+                title: 'Checkout',
+                icon: 'success',
+                text: 'Gracias por tu compra!',
+                confirmButtonText: 'OK'
+            });
+            console.log(purchaseData)
+            return axios.post('https://api.mercadopago.com/checkout/preferences', { purchaseData });
+        })
+        .then((res) => {
+            window.location.href = res.data.init_point;
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+  };
 
   return (
     <>
@@ -104,27 +120,6 @@ export default function ShoppingCart() {
   )
 };
 
-// const handleIncrement = (item) => {
-//   const newItem = {  ...item, quantity: item.quantity + 1 };
-//   dispatch(updateCart(userId, [newItem])).then(() => {
-//     dispatch(getCartProducts(userId));
-//   });
-// };
-
-// const handleDecrement = (item) => {
-//   if (item.quantity > 1) {
-//     const newItem = {  ...item, quantity: item.quantity - 1 };
-//     dispatch(updateCart(userId, [newItem])).then(() => {
-//       dispatch(getCartProducts(userId));
-//     });
-//   }
-// };
-
-// const handleRemove = (productId) => {
-//   dispatch(cartRemove(userId, productId.productId)).then(() => {
-//     dispatch(getCartProducts(userId));
-//   });
-// };
 
 
 

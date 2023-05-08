@@ -12,7 +12,6 @@ export default function Detail() {
   let { id } = useParams();
   const product = useSelector((state) => state.allProducts);
   const [amount, setAmount] = useState(1);
-  console.log(product)
 
   const handleAddToCart = () => {
     const productToAdd = {

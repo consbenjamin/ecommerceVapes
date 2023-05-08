@@ -1,4 +1,4 @@
-const { Cart, Brand, Product, CartProduct } = require('../../db');
+const { Cart, Brand, Product } = require('../../db');
 // const jwt = require("jsonwebtoken");
 // const { SECRET } = process.env;
 
@@ -25,7 +25,6 @@ class PaymentController {
       });
 
       console.log(productList)
-
       const payment = await this.subscriptionService.createPayment(productList);
 
       return res.json(payment);

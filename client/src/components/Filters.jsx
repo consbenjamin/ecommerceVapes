@@ -17,8 +17,6 @@ export default function Filters() {
 
   // const filtersState = useSelector((state) => state.products);
 
-
-
   const handleBrandFilter = (brandId) => {
     dispatch(filterByBrand(brandId));
     setSelectedFilter(brandId);

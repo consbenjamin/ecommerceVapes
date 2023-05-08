@@ -5,7 +5,6 @@ import { getProducts } from '../redux/actions';
 import Card from "./Card";
 
 
-
 export default function Cards() {
   const dispatch = useDispatch()
   const allProducts = useSelector((state) => state.allProducts); //mapeo del estado a las props
@@ -18,7 +17,7 @@ export default function Cards() {
 
 
   let [visible, setVisible] = useState(8);
-  const showMoreFoods = () => {
+  const showMoreProducts = () => {
       setVisible(prevValue => prevValue + 8);
   }
 
@@ -46,7 +45,7 @@ export default function Cards() {
       </div>
       {canShowMore ?
       <div className="flex justify-center my-5">
-        <button className="bg-black hover:bg-gray-600 duration-300 px-5 py-2.5 rounded-md text-white font-semibold md:w-auto lg:w-auto w-[50%]" onClick={showMoreFoods}>Mostrar más resultados</button>
+        <button className="bg-black hover:bg-gray-600 duration-300 px-5 py-2.5 rounded-md text-white font-semibold md:w-auto lg:w-auto w-[50%]" onClick={showMoreProducts}>Mostrar más resultados</button>
       </div>
       : null}
     </div>

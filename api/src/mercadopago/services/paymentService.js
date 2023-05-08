@@ -7,16 +7,17 @@ class PaymentService {
         const url = "https://api.mercadopago.com/checkout/preferences";
 
         const body = {
-          items: [
-            {
-              title: "Dummy Title",
-              description: "Dummy description",
-              picture_url: "http://www.myapp.com/myimage.jpg",
-              category_id: "category123",
-              quantity: 1,
-              unit_price: 10
+          items: productList.map(item => {
+            return {
+              title: item.product.name,
+              description: item.product.description,
+              picture_url: item.product.img,
+              category_id: item.product.id,
+              brand_name: item.product.brand.name,
+              quantity: item.quantity,
+              unit_price: item.product.price
             }
-          ],
+          }),
           back_urls: {
             failure: "http://localhost:3001/failure",
             pending: "http://localhost:3001/pending",
@@ -24,6 +25,8 @@ class PaymentService {
           },
           auto_return: "approved",
         };
+
+        console.log(body)
     
         const payment = await axios.post(url, body, {
           headers: {

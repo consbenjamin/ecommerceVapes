@@ -144,7 +144,7 @@ export default function rootReducer (state = initialState(), action) {
         }
     }
     case CART_REMOVE: {
-      const newCart = state.cart.filter(item => item.id !== action.payload)
+      const newCart = Array.isArray(state.cart) ? state.cart.filter(item => item.id !== action.payload) : [];
       localStorage.setItem('cart', JSON.stringify(newCart))
       return {
           ...state,

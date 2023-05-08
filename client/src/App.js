@@ -11,34 +11,51 @@ import AddProduct from "./components/admin/AddProduct.jsx";
 import CardEdit from "./components/admin/CardEdit.jsx";
 import MyProfile from "./components/account/MyProfile.jsx";
 import Faq from "./components/Faq.jsx";
+import Success from "./components/purchase/back_urls/Success.jsx";
+import Pending from "./components/purchase/back_urls/Pending.jsx";
+import Failure from "./components/purchase/back_urls/Failure.jsx";
+
+
+function Layout({ children }) {
+  return (
+    <>
+      <Navbar />
+      {children}
+    </>
+  );
+}
 
 function App() {
   return (
     <>
-      <Navbar/>
-        <Routes>
+      <Routes>
+        <Route path="/" element={<Layout><Home /></Layout>} />
 
-          <Route path='/' element={<Home/>}/>
+        <Route path="/faq" element={<Layout><Faq/></Layout>} />
 
-          <Route path='/faq' element={<Faq/>}/>   
+        <Route path="/detail/:id" element={<Layout><Detail/></Layout>} />
 
-          <Route path='/detail/:id' element={<Detail/>}/>
+        <Route path="/login" element={<Layout><Login/></Layout>} />
 
-          <Route path='/login' element={<Login/>}/>
+        <Route path="/register" element={<Layout><Register/></Layout>} />
 
-          <Route path='/register' element={<Register/>}/>
+        <Route path="/editData/:id" element={<Layout><MyProfile/></Layout>} />
 
-          <Route path='/editData/:id' element={<MyProfile/>}/>
+        <Route path="/cart" element={<Layout><ShoppingCart/></Layout>} />
 
-          <Route path='/cart' element={<ShoppingCart/>}/>
+        <Route path="/admin" element={<Layout><Admin/></Layout>} />
 
-          <Route path='/admin' element={<Admin/>}/>
+        <Route path="/admin/addProduct" element={<Layout><AddProduct/></Layout>} />
 
-          <Route path='/admin/addProduct' element={<AddProduct/>}/>
+        <Route path="/admin/editProduct" element={<Layout><CardEdit/></Layout>} />
 
-          <Route path='/admin/editProduct' element={<CardEdit/>}/>
+        <Route path="/success" element={<Success/>} />
 
-        </Routes>
+        <Route path="/pending" element={<Pending/>} />
+
+        <Route path="/failure" element={<Failure/>} />
+
+    </Routes>
     </>
   );
 }
