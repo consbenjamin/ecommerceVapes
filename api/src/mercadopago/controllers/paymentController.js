@@ -1,6 +1,6 @@
 const { Cart, Brand, Product } = require('../../db');
-// const jwt = require("jsonwebtoken");
-// const { SECRET } = process.env;
+const jwt = require("jsonwebtoken");
+const { SECRET } = process.env;
 
 class PaymentController {
   constructor(subscriptionService) {
@@ -9,11 +9,14 @@ class PaymentController {
 
   async getPaymentLink(req, res) {
     try {
-      // const token = req.headers["x-access-token"];
-      // const decoded = jwt.verify(token, SECRET);
-      // const userId = decoded.id;
+      const token = req.headers.authorization?.split(' ')[1];
+      const decoded = jwt.verify(token, SECRET);
+      const userId = decoded.id;
 
       const productList = await Cart.findAll({
+        where:{
+          userId:userId
+        },
         include: [
           {
             model: Product,

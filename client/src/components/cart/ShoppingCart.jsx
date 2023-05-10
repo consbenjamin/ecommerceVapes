@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import CardCarrito from './CardCarrito';
-import {cartRemove, postToCart} from '../../redux/actions';
+import {cartRemove, postToCart, purchaseLink} from '../../redux/actions';
 import { TbTrash } from "react-icons/tb";
 import Swal from 'sweetalert2';
 import Footer from '../Footer';
@@ -12,6 +11,12 @@ export default function ShoppingCart() {
 
   const dispatch = useDispatch();
   const [items, setItems] = useState([]);
+  const [paymentLinkReady, setPaymentLinkReady] = useState(false);
+  const [clicked, setClicked] = useState(false);
+
+
+  const paymentLink = useSelector((state) => state.purchaseLink)
+  console.log(paymentLink, 'paymentLink')
 
   useEffect(() => {
     const items = JSON.parse(localStorage.getItem('cart'));
@@ -20,7 +25,18 @@ export default function ShoppingCart() {
     }
   }, []);
 
-  console.log(items, "items");
+  useEffect(() => {
+    setPaymentLinkReady(!!paymentLink);
+  }, [paymentLink]);
+
+  useEffect(() => {
+    if (paymentLink && clicked) {
+      window.open(paymentLink);
+      console.log(paymentLink, "MercadoPago Link");
+      setClicked(false);
+    }
+  }, [paymentLink, clicked]);
+
   const userId = localStorage.getItem('userId');
 
   let price = 0;
@@ -37,28 +53,32 @@ export default function ShoppingCart() {
     setItems(filteredItems);
   };
 
-  const products = items
+  const products = items;
+  const purchase = products 
 
-  const handlePostToCart = () => {
-    dispatch(postToCart(userId, products))
-        .then(() => {
-            sessionStorage.setItem('purchase', JSON.stringify({ userId, products }));
-            const purchaseData = JSON.parse(sessionStorage.getItem('purchase'));
-            Swal.fire({
-                title: 'Checkout',
-                icon: 'success',
-                text: 'Gracias por tu compra!',
-                confirmButtonText: 'OK'
-            });
-            console.log(purchaseData)
-            return axios.post('https://api.mercadopago.com/checkout/preferences', { purchaseData });
-        })
-        .then((res) => {
-            window.location.href = res.data.init_point;
-        })
-        .catch((error) => {
-            console.log(error);
-        });
+  localStorage.setItem('purchaseData', JSON.stringify(purchase));
+  const purchaseData = JSON.parse(localStorage.getItem('purchaseData'));
+  console.log(purchaseData)
+
+  const handlePostToCart = async () => {
+    try {
+      await dispatch(postToCart(userId, products));
+      Swal.fire({
+        title: 'Checkout',
+        icon: 'success',
+        text: 'Redireccionando al Pago',
+        confirmButtonText: 'OK',
+        timer: 2000
+      });
+
+      const token = localStorage.getItem("token");
+      console.log(token)
+      await dispatch(purchaseLink(token));
+  
+      setClicked(true);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -119,8 +139,6 @@ export default function ShoppingCart() {
     </>
   )
 };
-
-
 
 
 

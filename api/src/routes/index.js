@@ -13,6 +13,7 @@ router.use('/account', account)
 
 const PaymentController = require("../mercadopago/controllers/paymentController");
 const PaymentService = require("../mercadopago/services/paymentService");
+const { verifyToken } = require('../middlewares/jwtMiddleware');
 
 const PaymentInstance = new PaymentController(new PaymentService());
 
@@ -22,7 +23,7 @@ router.get("/", function (req, res, next) {
   });
 });
 
-router.get("/payment",async function (req, res, next) {
+router.get("/payment", verifyToken, async function (req, res, next) {
   PaymentInstance.getPaymentLink(req, res);
 });
 

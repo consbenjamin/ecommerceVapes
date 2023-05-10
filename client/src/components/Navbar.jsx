@@ -32,6 +32,7 @@ export default function Navbar() {
     localStorage.removeItem("firstName");
     localStorage.removeItem("token");
     localStorage.removeItem("image");
+    localStorage.removeItem("purchaseData");
     localStorage.removeItem("adminPrivileges");
 
     window.location.href = "/login";

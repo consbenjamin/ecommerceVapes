@@ -1,4 +1,4 @@
-import { GET_PRODUCTS, GET_PRODUCTS_BY_NAME, POST_PRODUCTS, EDIT_PRODUCT, GET_PRODUCT_BY_ID, POST_REGISTER_USER, LOGIN_SUCCESS, LOGIN_ERROR, CART_ADD, DELETE_PRODUCT_SUCCESS, DELETE_PRODUCT_FAIL, FILTER_PRODUCTS_BY_BRAND_SUCCESS, FILTER_PRODUCTS_BY_BRAND_FAILURE, FILTER_PRODUCTS_BY_PRICE_FAILURE, FILTER_PRODUCTS_BY_PRICE_SUCCESS, PRODUCTS_SORTED_BY_PRICE, EDIT_USER_DATA, CART_REMOVE, POST_TO_CART} from "./actions";
+import { GET_PRODUCTS, GET_PRODUCTS_BY_NAME, POST_PRODUCTS, EDIT_PRODUCT, GET_PRODUCT_BY_ID, POST_REGISTER_USER, LOGIN_SUCCESS, LOGIN_ERROR, CART_ADD, DELETE_PRODUCT_SUCCESS, DELETE_PRODUCT_FAIL, FILTER_PRODUCTS_BY_BRAND_SUCCESS, FILTER_PRODUCTS_BY_BRAND_FAILURE, FILTER_PRODUCTS_BY_PRICE_FAILURE, FILTER_PRODUCTS_BY_PRICE_SUCCESS, PRODUCTS_SORTED_BY_PRICE, EDIT_USER_DATA, CART_REMOVE, POST_TO_CART, PURCHASE_LINK} from "./actions";
 
 
 const initialState = () => {
@@ -10,6 +10,7 @@ const initialState = () => {
     error: null,
     isLoading: false,
     cart: [],
+    purchaseLink: [],
     numberCart: 0,
   };
 }
@@ -193,55 +194,13 @@ export default function rootReducer (state = initialState(), action) {
         products: action.payload
       };
     }
+    case PURCHASE_LINK: {
+      return {
+        ...state,
+        purchaseLink: action.payload
+      };
+    }
     default: 
       return state;
   }
 };
-
-
-
-
-// SIN CONTROLADORES EN EL BACK:
-// case CART_UP:
-    //   state.numberCart++
-    //   state.cart[action.payload].quantity++;
-    //   localStorage.setItem('cart', JSON.stringify(state.cart))
-    //   return {
-    //       ...state
-    //   }
-    // case CART_DOWN: {
-    //   let quantity = state.cart[action.payload].quantity;
-    //   if (quantity > 1) {
-    //       state.numberCart--;
-    //       state.cart[action.payload].quantity--;
-
-    //       localStorage.setItem('cart', JSON.stringify(state.cart))
-    //       return {
-    //           ...state
-    //       }
-    //   }
-    // }
-
-    
-
-
-
-
-
-
-
-
-  //con controladores en el back 
-    // case CART_ADD: {
-    //   return {
-    //     ...state,
-    //     cart: [action.payload, ...state.cart],
-    //   };
-    // }
-
-    // case UPDATE_CART: {
-    //   return {
-    //     ...state,
-    //     cart: action.payload
-    //   };
-    // }

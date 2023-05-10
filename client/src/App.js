@@ -11,9 +11,9 @@ import AddProduct from "./components/admin/AddProduct.jsx";
 import CardEdit from "./components/admin/CardEdit.jsx";
 import MyProfile from "./components/account/MyProfile.jsx";
 import Faq from "./components/Faq.jsx";
-import Success from "./components/purchase/back_urls/Success.jsx";
-import Pending from "./components/purchase/back_urls/Pending.jsx";
-import Failure from "./components/purchase/back_urls/Failure.jsx";
+import Success from "./components/purchase/Success.jsx";
+import Pending from "./components/purchase/Pending.jsx";
+import Failure from "./components/purchase/Failure.jsx";
 
 
 function Layout({ children }) {

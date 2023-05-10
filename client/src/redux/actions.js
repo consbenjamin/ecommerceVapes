@@ -30,6 +30,8 @@ export const FILTER_PRODUCTS_BY_PRICE_FAILURE = 'FILTER_PRODUCTS_BY_PRICE_FAILUR
 
 export const PRODUCTS_SORTED_BY_PRICE = 'PRODUCTS_SORTED_BY_PRICE';
 
+export const PURCHASE_LINK = 'PURCHASE_LINK';
+
 
 
 
@@ -261,6 +263,27 @@ export function sortByPrice(order){
     }
   }
 };
+
+export function purchaseLink(token){
+  return async function(dispatch) {
+    try {
+      let response = await axios.get('http://localhost:3001/payment', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      dispatch({
+        type: PURCHASE_LINK,
+        payload: response.data.init_point
+      });
+      console.log(response.data, "action")
+    } catch (error) {
+      console.error(error);
+    }
+  }
+};
+
+
 
 
 
