@@ -1,13 +1,27 @@
-import React from "react";
+import React, { useEffect, useState }  from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { postPurchasedProduct } from "../../redux/actions";
 
 export default function Success() {
-  // obtener los items del session storage
-  const cart = JSON.parse(localStorage.getItem("purchaseData"));
-  console.log(cart);
 
-  // calcular el total
+  const dispatch = useDispatch();
+  const [actionDispatched, setActionDispatched] = useState(false)
+
+  const cart = JSON.parse(localStorage.getItem("purchaseData"));
   const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+
+  useEffect(() => {
+    const userId = localStorage.getItem('userId');
+    const actionAlreadyDispatched = sessionStorage.getItem('actionDispatched');
+
+    if (!actionAlreadyDispatched) {
+    dispatch(postPurchasedProduct(userId, cart));
+    sessionStorage.setItem('actionDispatched', true);
+    setActionDispatched(true);
+  }
+}, [dispatch, cart]);
+
 
   return (
     <>
@@ -20,7 +34,7 @@ export default function Success() {
       <div className="bg-green-100 py-10 mt-[50px]">
         <div className="container mx-auto px-4">
           <h2 className="text-4xl font-bold mb-4">¡Gracias por tu compra!</h2>
-          <p className="mb-4">Tu pago ha sido aprobado.</p>
+          <p className="mb-4 text-xl font-semibold text-green-900">Tu pago ha sido aprobado.</p>
           <p className="text-lg font-semibold mb-4">Total: ${total}</p>
           <ul className="list-disc pl-4">
             {cart.map((item, index) => (

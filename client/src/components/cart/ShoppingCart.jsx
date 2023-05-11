@@ -14,12 +14,11 @@ export default function ShoppingCart() {
   const [paymentLinkReady, setPaymentLinkReady] = useState(false);
   const [clicked, setClicked] = useState(false);
 
-
   const paymentLink = useSelector((state) => state.purchaseLink)
-  console.log(paymentLink, 'paymentLink')
 
   useEffect(() => {
     const items = JSON.parse(localStorage.getItem('cart'));
+    console.log(items, "items")
     if (items) {
       setItems(items);
     }
@@ -44,25 +43,36 @@ export default function ShoppingCart() {
   price = items.map(e => e.price * e.quantity).reduce((a, current) => a + current, 0);
   }
 
-  const cartNumber = items && items.length > 0 ? items.map(e => e.quantity).reduce((a, current) => a + current, 0) : 0;
-  localStorage.setItem('cartNumber', cartNumber);
 
   const handleRemove = (id) => {
     const filteredItems = items.filter(item => item.id !== id);
     dispatch(cartRemove(id))
     setItems(filteredItems);
+    localStorage.setItem('cart', JSON.stringify(filteredItems));
+
+    Swal.fire({
+      position: 'top-end',
+      title: 'Producto removido del carrito',
+      showConfirmButton: false,
+      timer: 1000,
+      timerProgressBar: true,
+      customClass: {
+        popup: 'w-[300px] h-[60px] items-center',
+        title: 'text-lg font-semibold',
+        timerProgressBar: 'bg-red-400',
+      },
+      backdrop: false,
+    });
   };
 
-  const products = items;
-  const purchase = products 
 
-  localStorage.setItem('purchaseData', JSON.stringify(purchase));
+  localStorage.setItem('purchaseData', JSON.stringify(items));
   const purchaseData = JSON.parse(localStorage.getItem('purchaseData'));
-  console.log(purchaseData)
+  console.log(purchaseData, "purchaseData")
 
   const handlePostToCart = async () => {
     try {
-      await dispatch(postToCart(userId, products));
+      await dispatch(postToCart(userId, items));
       Swal.fire({
         title: 'Checkout',
         icon: 'success',
@@ -106,11 +116,11 @@ export default function ShoppingCart() {
                   )
                 })
               ) : (
-                <p>Carrito vacío</p>
+                <p className='font-semibold'>Carrito vacío</p>
               )}
               <div className="mt-6 border-t flex items-center justify-between">
-                <p className="text-sm font-medium text-gray-900">Total</p>
-                <p className="text-2xl font-semibold text-gray-900"><span className="text-xs font-normal text-gray-400">ARS</span>{price}</p>
+                <p className="text-base font-medium text-gray-900">Total</p>
+                <p className="text-2xl font-semibold text-gray-900"><span className="text-xs font-normal text-gray-400">ARS </span>{price}</p>
               </div>
 
 

@@ -2,6 +2,7 @@ const { Router } = require('express');
 
 const products = require('./products.routes');
 const account = require('./user.routes');
+const payment = require('./payment.routes');
 
 const router = Router();
 
@@ -9,7 +10,10 @@ router.use('/products', products)
 
 router.use('/account', account)
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////
+router.use('/payment', payment)
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////MERCADOPAGO
 
 const PaymentController = require("../mercadopago/controllers/paymentController");
 const PaymentService = require("../mercadopago/services/paymentService");

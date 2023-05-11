@@ -1,4 +1,4 @@
-import { GET_PRODUCTS, GET_PRODUCTS_BY_NAME, POST_PRODUCTS, EDIT_PRODUCT, GET_PRODUCT_BY_ID, POST_REGISTER_USER, LOGIN_SUCCESS, LOGIN_ERROR, CART_ADD, DELETE_PRODUCT_SUCCESS, DELETE_PRODUCT_FAIL, FILTER_PRODUCTS_BY_BRAND_SUCCESS, FILTER_PRODUCTS_BY_BRAND_FAILURE, FILTER_PRODUCTS_BY_PRICE_FAILURE, FILTER_PRODUCTS_BY_PRICE_SUCCESS, PRODUCTS_SORTED_BY_PRICE, EDIT_USER_DATA, CART_REMOVE, POST_TO_CART, PURCHASE_LINK} from "./actions";
+import { GET_PRODUCTS, GET_PRODUCTS_BY_NAME, POST_PRODUCTS, EDIT_PRODUCT, GET_PRODUCT_BY_ID, POST_REGISTER_USER, LOGIN_SUCCESS, LOGIN_ERROR, CART_ADD, DELETE_PRODUCT_SUCCESS, DELETE_PRODUCT_FAIL, FILTER_PRODUCTS_BY_BRAND_SUCCESS, FILTER_PRODUCTS_BY_BRAND_FAILURE, FILTER_PRODUCTS_BY_PRICE_FAILURE, FILTER_PRODUCTS_BY_PRICE_SUCCESS, PRODUCTS_SORTED_BY_PRICE, EDIT_USER_DATA, CART_REMOVE, POST_TO_CART, PURCHASE_LINK, POST_PURCHASED_PRODUCT } from "./actions";
 
 
 const initialState = () => {
@@ -9,9 +9,10 @@ const initialState = () => {
     token: [],
     error: null,
     isLoading: false,
-    cart: [],
+    cart: JSON.parse(localStorage.getItem('cart')) || [],
+    numberCart: JSON.parse(localStorage.getItem('cart'))?.reduce((total, item) => total + item.quantity, 0) || 0,
     purchaseLink: [],
-    numberCart: 0,
+    purchasedProducts: [],
   };
 }
 
@@ -97,59 +98,42 @@ export default function rootReducer (state = initialState(), action) {
       };
     }
     case CART_ADD: {
-      console.log("action.payload", action.payload);
-        // Se verifica si el número de elementos en el carrito es igual a 0
-        if (state.numberCart === 0) {
-          // Si es así, se crea un objeto para el carrito con la información del producto a añadir
-            let cart = {
-                id: action.payload.id,
-                quantity: action.payload.quantity,
-                name: action.payload.name,
-                img: action.payload.img,
-                price: action.payload.price,
-                flavor: action.payload.flavor
-            }
-            // Se agrega el objeto del carrito al array del estado
-            state.cart.push(cart);
-        }
-        // Si el carrito ya tiene elementos, se verifica si el producto a añadir ya está en el carrito
-        else {
-            let check = false;
-            state.cart.forEach((item, key) => {
-                if (item.id === action.payload.id) {
-                  // Si el producto ya está en el carrito, se incrementa la cantidad
-                    state.cart[key].quantity += action.payload.quantity;
-                    check = true;
-                };
-            });
-            // Si el producto no está en el carrito, se crea un objeto para el carrito con la información del producto a añadir
-            if (!check) {
-                let _cart = {
-                    id: action.payload.id,
-                    quantity: action.payload.quantity,
-                    name: action.payload.name,
-                    img: action.payload.img,
-                    price: action.payload.price,
-                    flavor: action.payload.flavor
-                }
-                // Se agrega el objeto del carrito al array del estado
-                state.cart.push(_cart);
-            }
-        }
-        // Se actualiza el carrito en el almacenamiento local
-        localStorage.setItem('cart', JSON.stringify(state.cart))
-        // Se retorna un nuevo objeto del estado con el número de elementos en el carrito actualizado
-            return {
-            ...state,
-            numberCart: state.numberCart + 1
-        }
+      const productToAdd = action.payload;
+      console.log("action.payload", productToAdd)
+      const cartItem = state.cart.find(item => item.id === productToAdd.id);
+    
+      if (cartItem) {
+        // Si el producto ya está en el carrito, se actualiza la cantidad
+        cartItem.quantity += productToAdd.quantity;
+      } else {
+        // Si el producto no está en el carrito, se agrega al array
+        state.cart.push(productToAdd);
+      }
+    
+      // Se actualiza el carrito en el almacenamiento local
+      localStorage.setItem('cart', JSON.stringify(state.cart));
+    
+      return {
+        ...state,
+        numberCart: state.numberCart + productToAdd.quantity
+      }
     }
     case CART_REMOVE: {
+      const removedItemId = action.payload;
+      const cartItem = state.cart.find(item => item.id === removedItemId);
+
+      let newNumberCart = state.numberCart;
+
+      if (cartItem) {
+        // Si el producto está en el carrito, se resta su cantidad del numberCart
+        newNumberCart -= cartItem.quantity;
+      }
       const newCart = Array.isArray(state.cart) ? state.cart.filter(item => item.id !== action.payload) : [];
       localStorage.setItem('cart', JSON.stringify(newCart))
       return {
           ...state,
-          cart: newCart
+          cart: newCart,
+          numberCart: newNumberCart
       }
     }
     case POST_TO_CART: {
@@ -198,6 +182,15 @@ export default function rootReducer (state = initialState(), action) {
       return {
         ...state,
         purchaseLink: action.payload
+      };
+    }
+    case POST_PURCHASED_PRODUCT: {
+      const purchasedProducts = action.payload;
+      return {
+        ...state,
+        purchasedProducts: [...state.purchasedProducts, ...purchasedProducts],
+        cart: [],
+        numberCart: 0
       };
     }
     default: 

@@ -28,7 +28,8 @@ export default function Detail() {
       timerProgressBar: true,
       customClass: {
         popup: 'w-[300px] h-[60px] items-center',
-        title: 'text-lg'
+        title: 'text-lg font-semibold',
+        timerProgressBar: 'bg-green-400',
       },
       backdrop: false,
     });

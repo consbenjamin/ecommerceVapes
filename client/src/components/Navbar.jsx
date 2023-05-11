@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { AiOutlineClose, AiOutlineMenu, AiFillHome } from 'react-icons/ai';
 import { BsFillCartFill, BsFillPersonFill } from 'react-icons/bs';
 import { MdAdminPanelSettings } from "react-icons/md";
@@ -11,13 +12,18 @@ export default function Navbar() {
 
   const [open, setOpen] = useState(false);
   const [cartItems, setCartItems ] = useState(0); 
+  const numberCart = useSelector((state) => state.numberCart);
+  console.log(numberCart, "numberCart")
+
 
   var adminPrivileges= JSON.parse(localStorage.getItem("adminPrivileges"));
 
+ 
   useEffect(() => {
-    const newCartItems = localStorage.getItem('cartNumber');
-    setCartItems(newCartItems);
-  }, [cartItems]);
+    if (numberCart) {
+      setCartItems(numberCart);
+    }
+  }, [cartItems, numberCart]);
   
 
   const loggedInUser = localStorage.getItem("firstName");
@@ -74,7 +80,7 @@ export default function Navbar() {
             </div>
           <Link className='flex items-center' to={'/cart'}>
             <BsFillCartFill size={25} className='text-black'/>
-            <span className=' text-white text-base font-sans font-bold bg-red-500 rounded-full px-[7px] mb-[16px] h-[23px] absolute ml-[16px] scale-[85%] hover:bg-red-400'>{cartItems}</span>
+            <span className=' text-white text-base font-sans font-bold bg-red-500 rounded-full px-[7px] mb-[16px] h-[23px] absolute ml-[16px] scale-[85%] hover:bg-red-400'>{numberCart}</span>
           </Link>
           </div> 
           }

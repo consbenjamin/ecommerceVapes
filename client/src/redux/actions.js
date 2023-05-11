@@ -31,6 +31,7 @@ export const FILTER_PRODUCTS_BY_PRICE_FAILURE = 'FILTER_PRODUCTS_BY_PRICE_FAILUR
 export const PRODUCTS_SORTED_BY_PRICE = 'PRODUCTS_SORTED_BY_PRICE';
 
 export const PURCHASE_LINK = 'PURCHASE_LINK';
+export const POST_PURCHASED_PRODUCT = 'POST_PURCHASED_PRODUCT';
 
 
 
@@ -200,11 +201,11 @@ export function cartAdd(payload) {
 };
 
 
-export function cartRemove(payload){
+export function cartRemove(id){
   return async function(dispatch){
       return dispatch({
         type: CART_REMOVE,
-        payload
+        payload: id
       })
   }
 };
@@ -277,6 +278,23 @@ export function purchaseLink(token){
         payload: response.data.init_point
       });
       console.log(response.data, "action")
+    } catch (error) {
+      console.error(error);
+    }
+  }
+};
+
+export function postPurchasedProduct(userId, products) {
+  return async function(dispatch) {
+    try {
+      const response = await axios.post('http://localhost:3001/payment/purchase', { userId, products });
+      dispatch({
+        type: POST_PURCHASED_PRODUCT,
+        payload: response.data
+      });
+      products.forEach(product => {
+        dispatch(cartRemove(product.id));
+      });
     } catch (error) {
       console.error(error);
     }
