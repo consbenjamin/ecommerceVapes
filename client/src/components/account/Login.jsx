@@ -121,17 +121,17 @@ export default function Login() {
           </p>
           <form onSubmit={handleSubmit} className="flex flex-col items-stretch pt-3 md:pt-8">
             <div className="flex flex-col pt-4">
+              {error.email && (<span className='text-red-500 font-semibold'>{error.email}</span>)}
               <div className="relative flex overflow-hidden rounded-md border-2 transition focus-within:border-blue-600">
                 <input type="email" name='email' value={userData.email} onChange={handleChange} placeholder="Email" 
                 className="w-full flex-shrink appearance-none border-gray-300 bg-white py-2 px-4 text-base text-gray-700 placeholder-gray-400 focus:outline-none" />
-                {error.email && (<span>{error.email}</span>)}
               </div>
             </div>
             <div className="mb-4 flex flex-col pt-4">
+              {error.password && (<span className='text-red-500 font-semibold'>{error.password}</span>)}
               <div className="relative flex overflow-hidden rounded-md border-2 transition focus-within:border-blue-600">
                 <input type="password" name='password' value={userData.password} onChange={handleChange} placeholder="Password (minimum 8 characters)" 
                 className="w-full flex-shrink appearance-none border-gray-300 bg-white py-2 px-4 text-base text-gray-700 placeholder-gray-400 focus:outline-none" />
-                {error.password && (<span>{error.password}</span>)}
               </div>
             </div>
             <button type="submit" className="mt-6 rounded-lg bg-primary px-4 py-2 text-center text-base font-semibold text-white shadow-md hover:bg-purple-700 md:w-32">

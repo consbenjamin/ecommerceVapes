@@ -65,7 +65,7 @@ export function postProducts(payload) {
 export function editProduct(id, newProduct) {
   return async function (dispatch) {
     try {
-      let json = await axios.put(`http://localhost:3001/products/edit/${id}`, newProduct);
+      let json = await axios.put(`http://localhost:3001/products/editProduct/${id}`, newProduct);
       return dispatch({
         type: EDIT_PRODUCT,
         payload: json.data

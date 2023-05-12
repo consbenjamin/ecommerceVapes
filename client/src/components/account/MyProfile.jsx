@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { editUserData } from '../../redux/actions';
+import Swal from 'sweetalert2';
 
 
 
@@ -15,7 +16,6 @@ export default function MyProfile() {
 
   const loggedInUserId = localStorage.getItem("userId");
 
-  console.log(user.id)
   console.log(loggedInUserId)
 
   useEffect(() => {
@@ -45,7 +45,7 @@ export default function MyProfile() {
   };
 
 
-  const handleSubmit = e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const data = {
       firstName,
@@ -54,7 +54,28 @@ export default function MyProfile() {
       password,
       repeatPassword
     };
-    dispatch(editUserData(loggedInUserId, data));
+    try {
+      await dispatch(editUserData(loggedInUserId, data));
+      localStorage.setItem('firstName', firstName);
+      Swal.fire({
+        title: 'Datos de usuario actualizados',
+        text: 'Los datos del usuario se han actualizado exitosamente.',
+        icon: 'success',
+        timer: 3000,
+        showConfirmButton: false
+      }).then(() => {
+        window.location.href = '/';
+      });
+    } catch (error) {
+      Swal.fire({
+        title: 'Error al actualizar los datos de usuario',
+        text: 'Ha ocurrido un error al intentar actualizar los datos de usuario.',
+        icon: 'error',
+        showConfirmButton: true,
+        confirmButtonText: 'Cerrar'
+      });
+      console.log(error)
+    }
   };
 
 

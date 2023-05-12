@@ -17,7 +17,7 @@ export default function Faq() {
           <div className="py-5">
             <details className="group">
               <summary className="flex justify-between items-center font-medium cursor-pointer list-none">
-                <span> What is a SAAS platform?</span>
+                <span> Garantías, devoluciones y reembolsos</span>
                 <span className="transition group-open:rotate-180">
                   <svg fill="none" height="24" shape-rendering="geometricPrecision" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" viewBox="0 0 24 24" width="24">
                     <path d="M6 9l6 6 6-6"></path>
@@ -25,14 +25,14 @@ export default function Faq() {
                 </span>
               </summary>
               <p className="text-neutral-600 mt-3 group-open:animate-fadeIn">
-                SAAS platform is a cloud-based software service that allows users to access and use a variety of tools and functionality.
+              Los vaporizadores que vendemos son originales y desechables, por eso vienen sellados de fábrica. Todos nuestros equipos tienen un periodo de garantía para reposiciones de 48hs en caso de que tengan alguna falla de fábrica.
               </p>
             </details>
           </div>
           <div className="py-5">
             <details className="group">
               <summary className="flex justify-between items-center font-medium cursor-pointer list-none">
-                <span> How does  billing work?</span>
+                <span> Cuales son las formas de pago?</span>
                 <span className="transition group-open:rotate-180">
                   <svg fill="none" height="24" shape-rendering="geometricPrecision" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" viewBox="0 0 24 24" width="24">
                     <path d="M6 9l6 6 6-6"></path>
@@ -40,16 +40,18 @@ export default function Faq() {
                 </span>
               </summary>
               <p className="text-neutral-600 mt-3 group-open:animate-fadeIn">
-                We offers a variety of billing options, including monthly and annual subscription plans,
-                as well as pay-as-you-go pricing for certain services. Payment is typically made through a credit
-                card or other secure online payment method.
+              Podes Abonar de las siguientes formas:
+              <br />
+              - MercadoPago (Tarjetas de Debito y Credito / PagoFacil / RapiPago)
+              <br />
+              - Transferencia 
               </p>
             </details>
           </div>
           <div className="py-5">
             <details className="group">
               <summary className="flex justify-between items-center font-medium cursor-pointer list-none">
-                <span> Can I get a refund for my subscription?</span>
+                <span> Cuales son los metodos de envio?</span>
                 <span className="transition group-open:rotate-180">
                   <svg fill="none" height="24" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" width="24">
                     <path d="M6 9l6 6 6-6"></path>
@@ -67,7 +69,7 @@ export default function Faq() {
           <div className="py-5">
             <details className="group">
               <summary className="flex justify-between items-center font-medium cursor-pointer list-none">
-                <span> How do I cancel my subscription?</span>
+                <span> Cuanto demoran las entregas?</span>
                 <span className="transition group-open:rotate-180">
                   <svg fill="none" height="24" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" width="24">
                     <path d="M6 9l6 6 6-6"></path>
@@ -75,16 +77,15 @@ export default function Faq() {
                 </span>
               </summary>
               <p className="text-neutral-600 mt-3 group-open:animate-fadeIn">
-                To cancel your We subscription, you can log in to your account and navigate to the
-                subscription management page. From there, you should be able to cancel your subscription and stop
-                future billing.
+                Todas las entregas son realizadas en lo posible dentro de las 24 horas. Posterior a la compra y previamente coordinado 
+                (en lo posible se entregará en el día).
               </p>
             </details>
           </div>
           <div className="py-5">
             <details className="group">
               <summary class="flex justify-between items-center font-medium cursor-pointer list-none">
-                <span> Can I try this platform for free?</span>
+                <span> Donde se encuentra el local fisico?</span>
                 <span className="transition group-open:rotate-180">
                   <svg fill="none" height="24" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" width="24">
                     <path d="M6 9l6 6 6-6"></path>
@@ -92,15 +93,14 @@ export default function Faq() {
                 </span>
               </summary>
               <p className="text-neutral-600 mt-3 group-open:animate-fadeIn">
-                We offers a free trial of its  platform for a limited time. During the trial period,
-                you will have access to a limited set of features and functionality, but you will not be charged.
+                Somos una Tienda Online! NO poseemos Local Fisico. Trabajamos con Envios a Domicilio.
               </p>
             </details>
           </div>
           <div className="py-5">
             <details className="group">
               <summary className="flex justify-between items-center font-medium cursor-pointer list-none">
-                <span> How do I access   documentation?</span>
+                <span> Días y horarios de atención</span>
                 <span className="transition group-open:rotate-180">
                   <svg fill="none" height="24" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" width="24">
                     <path d="M6 9l6 6 6-6"></path>
@@ -108,16 +108,14 @@ export default function Faq() {
                 </span>
               </summary>
               <p className="text-neutral-600 mt-3 group-open:animate-fadeIn">
-                Documentation is available on the company's website and can be accessed by
-                logging in to your account. The documentation provides detailed information on how to use the ,
-                as well as code examples and other resources.
+                La Atención y Envios se realizan de Lunes a Viernes de 10 a 19 hs. (Consultar por Instagram).
               </p>
             </details>
           </div>
           <div className="py-5">
             <details className="group">
               <summary className="flex justify-between items-center font-medium cursor-pointer list-none">
-                <span> How do I contact support?</span>
+                <span> Quiero realizar compras mayoristas</span>
                 <span className="transition group-open:rotate-180">
                   <svg fill="none" height="24" shape-rendering="geometricPrecision" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" viewBox="0 0 24 24" width="24">
                     <path d="M6 9l6 6 6-6"></path>
@@ -125,16 +123,14 @@ export default function Faq() {
                 </span>
               </summary>
               <p className="text-neutral-600 mt-3 group-open:animate-fadeIn">
-                If you need help with the platform or have any other questions, you can contact the
-                company's support team by submitting a support request through the website or by emailing
-                support@We.com.
+              Para recibir informacion sobre Ventas Mayoristas comunicarse via Instagram.
               </p>
             </details>
           </div>
           <div className="py-5">
             <details className="group">
               <summary className="flex justify-between items-center font-medium cursor-pointer list-none">
-                <span> Do you offer any discounts or promotions?</span>
+                <span> Ofrecen descuentos o promociones?</span>
                 <span class="transition group-open:rotate-180">
                   <svg fill="none" height="24" shape-rendering="geometricPrecision" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" viewBox="0 0 24 24" width="24">
                     <path d="M6 9l6 6 6-6"></path>
@@ -144,23 +140,6 @@ export default function Faq() {
               <p className="text-neutral-600 mt-3 group-open:animate-fadeIn">
                 We may offer discounts or promotions from time to time. To stay up-to-date on the latest
                 deals and special offers, you can sign up for the company's newsletter or follow it on social media.
-              </p>
-            </details>
-          </div>
-          <div className="py-5">
-            <details className="group">
-              <summary className="flex justify-between items-center font-medium cursor-pointer list-none">
-                <span> How do we compare to other similar services?</span>
-                <span className="transition group-open:rotate-180">
-                  <svg fill="none" height="24" shapeRendering="geometricPrecision" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" viewBox="0 0 24 24" width="24">
-                    <path d="M6 9l6 6 6-6"></path>
-                  </svg>
-                </span>
-              </summary>
-              <p className="text-neutral-600 mt-3 group-open:animate-fadeIn">
-                This platform is a highly reliable and feature-rich service that offers a wide range
-                of tools and functionality. It is competitively priced and offers a variety of billing options to
-                suit different needs and budgets.
               </p>
             </details>
           </div>

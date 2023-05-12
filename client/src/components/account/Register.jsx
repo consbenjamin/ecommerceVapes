@@ -141,46 +141,40 @@ export default function Register() {
             Already registered? {" "} 
             <Link className='whitespace-nowrap font-semibold text-blue-700' to={'/login'}>Login here</Link>
           </p>
-          {/* <button className="mt-8 flex items-center justify-center rounded-md border px-4 py-1">
-            <img className="mr-2 h-5" src={googleLogo} alt='googleLogo' />Log in with Google
-          </button>
-          <div className="relative mt-8 flex h-px place-items-center bg-gray-200">
-            <div className="absolute left-1/2 h-6 -translate-x-1/2 bg-white px-4 text-center text-sm text-gray-500">Or use email instead</div>
-          </div> */}
           <form onSubmit={handleSubmit} className="flex flex-col items-stretch pt-3 md:pt-8">
             <div className="flex flex-col pt-4">
+                {error.firstName && (<span className=' text-red-500 text-base font-semibold'>{error.firstName}</span>)}
               <div className="relative flex overflow-hidden rounded-md border-2 transition focus-within:border-blue-600">
                 <input type="text" name='firstName' value={userData.firstName} onChange={handleChange} placeholder="First Name"
                 className="w-full flex-shrink appearance-none border-gray-300 bg-white py-2 px-4 text-base text-gray-700 placeholder-gray-400 focus:outline-none"/>
-                {error.firstName && (<span>{error.firstName}</span>)}
               </div>
             </div>
             <div className="flex flex-col pt-4">
+              {error.lastName && (<span className=' text-red-500 text-base font-semibold'>{error.lastName}</span>)}
               <div className="relative flex overflow-hidden rounded-md border-2 transition focus-within:border-blue-600">
                 <input type="text" name='lastName' value={userData.lastName} onChange={handleChange} placeholder="Last Name" 
                 className="w-full flex-shrink appearance-none border-gray-300 bg-white py-2 px-4 text-base text-gray-700 placeholder-gray-400 focus:outline-none"/>
-                {error.lastName && (<span>{error.lastName}</span>)}
               </div>
             </div>
             <div className="flex flex-col pt-4">
+              {error.email && (<span className='text-red-500 text-base font-semibold'>{error.email}</span>)}
               <div className="relative flex overflow-hidden rounded-md border-2 transition focus-within:border-blue-600">
                 <input type="email" name='email' value={userData.email} onChange={handleChange} placeholder="Email"
                 className="w-full flex-shrink appearance-none border-gray-300 bg-white py-2 px-4 text-base text-gray-700 placeholder-gray-400 focus:outline-none"/>
-                {error.email && (<span>{error.email}</span>)}
               </div>
             </div>
             <div className="flex flex-col pt-4">
+              {error.password && (<span className='text-red-500 text-base font-semibold'>{error.password}</span>)}
               <div className="relative flex overflow-hidden rounded-md border-2 transition focus-within:border-blue-600">
                 <input type="password" name='password' value={userData.password} onChange={handleChange} placeholder="Password (Min. 8 characters)"
                 className="w-full flex-shrink appearance-none border-gray-300 bg-white py-2 px-4 text-base text-gray-700 placeholder-gray-400 focus:outline-none"/>
-                {error.password && (<span>{error.password}</span>)}
               </div>
             </div>
             <div className="mb-4 flex flex-col pt-4">
+              {error.repeatPassword && (<span className='text-red-500 text-base font-semibold'>{error.repeatPassword}</span>)}
               <div className="relative flex overflow-hidden rounded-md border-2 transition focus-within:border-blue-600">
                 <input type="password" name='repeatPassword' value={userData.repeatPassword} onChange={handleChange} placeholder="Repeat Password"
                 className="w-full flex-shrink appearance-none border-gray-300 bg-white py-2 px-4 text-base text-gray-700 placeholder-gray-400 focus:outline-none"/>
-                {error.repeatPassword && (<span>{error.repeatPassword}</span>)}
               </div>
             </div>
             <button type="submit" className="mt-6 rounded-lg bg-primary px-4 py-2 text-center text-base font-semibold text-white shadow-md hover:bg-blue-700 md:w-32">

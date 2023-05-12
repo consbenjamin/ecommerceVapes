@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { AiOutlineClose, AiOutlineMenu, AiFillHome } from 'react-icons/ai';
 import { BsFillCartFill, BsFillPersonFill } from 'react-icons/bs';
 import { MdAdminPanelSettings } from "react-icons/md";
-import { MdFavorite, MdHelp } from 'react-icons/md';
+import { MdHelp } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import SearchBar from './SearchBar';
 
@@ -17,6 +17,7 @@ export default function Navbar() {
 
 
   var adminPrivileges= JSON.parse(localStorage.getItem("adminPrivileges"));
+  const userId = localStorage.getItem('userId')
 
  
   useEffect(() => {
@@ -74,7 +75,7 @@ export default function Navbar() {
             <div className="dropdown dropdown-hover dropdown-end">
               <div className='flex items-center'><span className='font-bold text-base mr-[5px]'>{loggedInUser}</span><BsFillPersonFill size={27} className='text-black'/></div>
               <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-gray-200 rounded-box w-52">
-                <li><Link className='font-medium' to={'/editData/:id'}>Edit Profile</Link></li>
+                <li><Link className='font-medium' to={`/editData/${userId}`}>Edit Profile</Link></li>
                 <li><button className='font-medium' onClick={handleLoginOut}>Log Out</button></li>
               </ul> 
             </div>
@@ -94,7 +95,6 @@ export default function Navbar() {
             </button>
             <ul className='flex flex-col p-4 text-[#18171c]'>
                 <li className='text-xl py-4 pl-1 flex'><Link className='flex' to= {'/'}><AiFillHome size={25} className='mr-4'/>Home</Link></li>
-                <li className='text-xl py-4 pl-1 flex'><MdFavorite size={25} className='mr-4'/>Favorites</li>
                 <li className='text-xl py-4 pl-1 flex'><Link className='flex' to= {'/faq'}><MdHelp size={25} className='mr-4'/>FAQ</Link></li>
                 {adminPrivileges === true ?
                 <li className='text-xl py-4 pl-1 flex'><Link className='flex' to= {'/admin'}><MdAdminPanelSettings size={28} className='mr-4'/>Admin Panel</Link></li>

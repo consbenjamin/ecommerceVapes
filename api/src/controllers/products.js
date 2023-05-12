@@ -136,7 +136,7 @@ const deleteProduct = async(req, res) => {
 const editProduct = async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, img, description, price, flavor, brandName } = req.body;
+    const { name, img, description, price, flavor, brand } = req.body;
 
     const productDb = await Product.findByPk(id);
 
@@ -144,15 +144,10 @@ const editProduct = async (req, res) => {
       return res.status(404).json({message: 'No se encontró el producto con el id especificado' });
     }
 
-    // Verificación de campos necesarios
-    if (!name || !img || !description || !price || !flavor || !brandName) {
-      return res.status(400).json({ message: 'Faltan campos requeridos' });
-    }
-
-    const brand = await Brand.findOne({ where: { name: brandName } });
-
-    if (!brand) {
-      return res.status(404).json({ message: 'No se encontró la marca especificada' });
+    // Crear la marca si no existe
+    let brandObj = await Brand.findOne({ where: { name: brand } });
+    if (!brandObj) {
+      brandObj = await Brand.create({ name: brand });
     }
 
     const updatedProduct = await productDb.update({
@@ -161,10 +156,17 @@ const editProduct = async (req, res) => {
       description,
       price,
       flavor,
-      brandId: brand.id,
+      brandId: brandObj.id,
     });
 
-    res.status(200).json(updatedProduct);
+    // Obtener el producto actualizado con la información de la marca
+    const editedProduct = await Product.findOne({
+      where: { id },
+      attributes: ["name", "description", "img", "flavor", "price", "id"],
+      include: [{ model: Brand, as: 'brand', attributes: ["name"] }]
+    });
+
+    res.status(200).json(editedProduct);
 
   } catch (error) {
     console.log(error);
@@ -222,3 +224,43 @@ module.exports = {getProducts, getProductsById, getProductsByName , postProducts
 // module.exports = { getProducts }
 
 
+
+
+// const editProduct = async (req, res) => {
+//   try {
+//     const { id } = req.params;
+//     const { name, img, description, price, flavor, brandName } = req.body;
+
+//     const productDb = await Product.findByPk(id);
+
+//     if (!productDb) {
+//       return res.status(404).json({message: 'No se encontró el producto con el id especificado' });
+//     }
+
+//     // Verificación de campos necesarios
+//     if (!name || !img || !description || !price || !flavor || !brandName) {
+//       return res.status(400).json({ message: 'Faltan campos requeridos', errors: ['name', 'img', 'description', 'price', 'flavor', 'brandName'] });
+//     }
+
+//     const brand = await Brand.findOne({ where: { name: brandName } });
+
+//     if (!brand) {
+//       return res.status(404).json({ message: 'No se encontró la marca especificada' });
+//     }
+
+//     const updatedProduct = await productDb.update({
+//       name,
+//       img,
+//       description,
+//       price,
+//       flavor,
+//       brandId: brand.id,
+//     });
+
+//     res.status(200).json(updatedProduct);
+
+//   } catch (error) {
+//     console.log(error);
+//     res.status(500).json({ message: 'Ocurrió un error al intentar actualizar el producto' });
+//   }
+// };

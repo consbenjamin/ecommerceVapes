@@ -34,7 +34,7 @@ export default function rootReducer (state = initialState(), action) {
     case GET_PRODUCTS_BY_NAME: {
       return {
         ...state,
-        allProducts: action.payload
+        products: action.payload
       }
     }
     case POST_PRODUCTS: {

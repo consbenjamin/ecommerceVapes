@@ -14,7 +14,7 @@ router.post('/', postProducts); // falta verifyToken, isAdmin,
 
 router.delete('/:id', verifyToken, isAdmin, deleteProduct);
 
-router.put('/:id', editProduct);
+router.put('/editProduct/:id', editProduct);
 
 router.get('/:id', getProductsById);
 

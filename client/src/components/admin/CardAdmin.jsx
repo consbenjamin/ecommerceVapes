@@ -67,7 +67,7 @@ export default function CardAdmin({name, price, img, id}) {
             </td>
             <td className="px-4 py-4">
               <div className="flex-col lg:flex-row lg:space-x-0 lg:space-y-2 items-center space-y-2 2xl:space-x-2">
-                <Link to={'/admin/editProduct'}>
+                <Link to={`products/editProduct/${id}`}>
                   <button
                     className="items-center px-2 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24"

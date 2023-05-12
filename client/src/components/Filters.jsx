@@ -15,8 +15,6 @@ export default function Filters() {
   const [maxPrice, setMaxPrice] = useState(10000);
   const [order, setOrder] = useState('asc');
 
-  // const filtersState = useSelector((state) => state.products);
-
   const handleBrandFilter = (brandId) => {
     dispatch(filterByBrand(brandId));
     setSelectedFilter(brandId);
@@ -86,8 +84,8 @@ export default function Filters() {
             <div className='flex-col mx-8 mt-2 border-t-2 border-b-2 lg:hidden '>
               <h3 className='text-black font-semibold text-base mt-6'>FILTROS</h3>
               <ul className=''>
-                <li className={`${changeFilterColor('1')} my-4`} onClick={() => handleBrandFilter('1')}>Ignite</li>
-                <li className={`${changeFilterColor('2')} my-4`} onClick={() => handleBrandFilter('2')}>Elfbar</li>
+                <li className={`${changeFilterColor('3')} my-4`} onClick={() => handleBrandFilter('3')}>Ignite</li>
+                <li className={`${changeFilterColor('5')} my-4`} onClick={() => handleBrandFilter('5')}>Elfbar</li>
               </ul>
               <button className='pb-[16px] mx-4' onClick={handleClearFilters}><MdFilterAltOff size={18}/></button>
             </div>
@@ -99,11 +97,11 @@ export default function Filters() {
             <button className='pb-[16px] ' onClick={handleClearFilters}><MdFilterAltOff size={18}/></button>
           </div>
           <ul className='flex flex-col gap-6 my-[26px] border-b border-gray-300 pb-[16px]'>
-            <li className={changeFilterColor('1')} onClick={() => handleBrandFilter('1')}>Ignite</li>
-            <li className={changeFilterColor('2')} onClick={() => handleBrandFilter('2')}>Elfbar</li>
+            <li className={changeFilterColor('3')} onClick={() => handleBrandFilter('3')}>Ignite</li>
+            <li className={changeFilterColor('5')} onClick={() => handleBrandFilter('5')}>Elfbar</li>
             <li className='pl-4 text-gray-500'>Zomo</li>
-            <li className='pl-4 text-gray-500'>Sin Nicotina</li>
-            <li className='pl-4 text-gray-500'>Con Nicotina</li>
+            {/* <li className='pl-4 text-gray-500'>Sin Nicotina</li>
+            <li className='pl-4 text-gray-500'>Con Nicotina</li> */}
           </ul>
         </div>
         <div>

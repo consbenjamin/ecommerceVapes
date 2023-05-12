@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import CardCarrito from './CardCarrito';
 import {cartRemove, postToCart, purchaseLink} from '../../redux/actions';
 import { TbTrash } from "react-icons/tb";
+import { BsFillCartXFill } from "react-icons/bs";
 import Swal from 'sweetalert2';
 import Footer from '../Footer';
 
@@ -13,6 +14,9 @@ export default function ShoppingCart() {
   const [items, setItems] = useState([]);
   const [paymentLinkReady, setPaymentLinkReady] = useState(false);
   const [clicked, setClicked] = useState(false);
+
+  const tokenLogin = localStorage.getItem("token");
+  console.log(tokenLogin,"tokenLogin");
 
   const paymentLink = useSelector((state) => state.purchaseLink)
 
@@ -96,7 +100,7 @@ export default function ShoppingCart() {
     <section className={`py-12 sm:py-16 lg:py-20 ${items.length >= 3 ? "bg-gray-100 " : "h-screen bg-gray-100 "}`}>
       <div className="mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-center mt-[45px]">
-          <h1 className="text-3xl font-semibold text-gray-900">Your Cart</h1>
+          <h1 className="text-3xl font-semibold text-gray-900">Tu Carrito</h1>
         </div>
 
         <div className="mx-auto mt-8 max-w-2xl md:mt-12">
@@ -116,7 +120,7 @@ export default function ShoppingCart() {
                   )
                 })
               ) : (
-                <p className='font-semibold'>Carrito vacío</p>
+                <p className='font-semibold flex items-center'>Carrito vacío</p>
               )}
               <div className="mt-6 border-t flex items-center justify-between">
                 <p className="text-base font-medium text-gray-900">Total</p>

@@ -47,7 +47,7 @@ function App() {
 
         <Route path="/admin/addProduct" element={<Layout><AddProduct/></Layout>} />
 
-        <Route path="/admin/editProduct" element={<Layout><CardEdit/></Layout>} />
+        <Route path="admin/products/editProduct/:id" element={<Layout><CardEdit/></Layout>} />
 
         <Route path="/success" element={<Success/>} />
 
