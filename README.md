@@ -3,6 +3,7 @@ e-commerce de vapes(VapeClub)
 - Tecnologias utilizadas:
 - Backend: node, express, sequelize, pg, mercadopago, jwt.
 - Frontend: react, redux, tailwind.
+- DataBase: postgreSQL.
 ![home_1](https://github.com/consbenjamin/ecommerceVapes/assets/106201629/93a1f0d1-fa00-4324-844d-73428b561a26)
 ![home_2](https://github.com/consbenjamin/ecommerceVapes/assets/106201629/432692b5-f175-4d06-847e-3a37aeda5870)
 ![register](https://github.com/consbenjamin/ecommerceVapes/assets/106201629/0d9ee57c-ebd0-4fff-90f0-24d9bbd32b1d)
