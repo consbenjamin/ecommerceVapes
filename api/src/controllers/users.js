@@ -66,6 +66,30 @@ const findUserById = async (req, res) => {
 
 ///////////////////////////////////////////////////////////////
 
+const findUserByEmail = async (req, res) => {
+  const { email } = req.params;
+
+  if (!email) {
+    return res.status(400).json({ message: 'El correo electrónico no puede estar vacío' });
+  }
+
+  try {
+    const user = await User.findOne({ where: { email }, attributes: { exclude: ['password'] } });
+
+    if (!user) {
+      return res.status(404).json({ message: 'Usuario no encontrado' });
+    }
+
+    res.status(200).json(user);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error buscando usuario por correo electrónico' });
+  }
+};
+
+
+///////////////////////////////////////////////////////////////
+
 const editUser = async (req, res) => {
   const { id } = req.params;
 
@@ -109,7 +133,12 @@ const getUsers = async (req, res) => {
 };
 
 
-////////////////////////////CARRITO////////////////////////////
+///////////////////////////////////////////////////////////////
+
+
+
+
+////////////////////////////CARRITO////////////////////////////////////////////////////////CARRITO////////////////////////////////////////////////////////
 
 const postProductToCart = async (req, res) => {
   try {
@@ -286,5 +315,5 @@ const getCartProducts = async (req, res) => {
 };
 
 
-module.exports = { postRegister, postLogin, findUserById, editUser, getUsers, postProductToCart, getCartProducts, removeFromCart, updateCartQuantity };
+module.exports = { postRegister, postLogin, findUserById, findUserByEmail, editUser, getUsers, postProductToCart, getCartProducts, removeFromCart, updateCartQuantity };
 

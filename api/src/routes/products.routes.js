@@ -10,7 +10,7 @@ router.get('/brands', getBrands);
 
 router.get('/brands/:brandId', filterByBrand);
 
-router.post('/', postProducts); // falta verifyToken, isAdmin,
+router.post('/', verifyToken, isAdmin, postProducts); // falta verifyToken, isAdmin,
 
 router.delete('/:id', verifyToken, isAdmin, deleteProduct);
 
